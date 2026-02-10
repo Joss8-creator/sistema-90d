@@ -1,0 +1,8 @@
+# Sistema 90D - Zero Dependencies
+# Python 3.11+ stdlib only
+
+# Este archivo existe para compatibilidad con herramientas de análisis
+# El sistema NO requiere dependencias externas - solo Python 3.11+
+
+# Dependencias opcionales para desarrollo:
+# Ver requirements-optional.txt

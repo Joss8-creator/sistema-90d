@@ -1,0 +1,388 @@
+/* 
+ * style.css - Estilos minimalistas para Sistema 90D
+ * Ruta: /home/josuedgg/Documentos/Proyectos/Sistema Base/sistema_90d/static/style.css
+ * 
+ * Objetivo: <5KB, mobile-first, sin frameworks
+ */
+
+/* ============================================================================
+   RESET MÍNIMO
+   ============================================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================================
+   VARIABLES CSS
+   ============================================================================ */
+:root {
+  --color-primary: #2563eb;
+  --color-success: #16a34a;
+  --color-warning: #ea580c;
+  --color-danger: #dc2626;
+  --color-bg: #ffffff;
+  --color-bg-alt: #f9fafb;
+  --color-text: #1f2937;
+  --color-text-light: #6b7280;
+  --color-border: #e5e7eb;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --radius: 0.375rem;
+}
+
+/* ============================================================================
+   BASE
+   ============================================================================ */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+  padding: var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-md);
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   FASE BANNER (Componente crítico)
+   ============================================================================ */
+.fase-banner {
+  background: linear-gradient(135deg, var(--color-primary), #1e40af);
+  color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-lg);
+}
+
+.fase-banner h2 {
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.5rem;
+}
+
+.tareas-fase {
+  list-style: none;
+  margin-top: var(--spacing-sm);
+}
+
+.tareas-fase li {
+  padding: var(--spacing-xs) 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.tareas-fase li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* ============================================================================
+   FORMULARIOS
+   ============================================================================ */
+form {
+  background: var(--color-bg-alt);
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-sm);
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button,
+.btn {
+  background: var(--color-primary);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+}
+
+button:hover,
+.btn:hover {
+  background: #1e40af;
+  text-decoration: none;
+}
+
+/* ============================================================================
+   TABLAS
+   ============================================================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--spacing-lg);
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+thead {
+  background: var(--color-bg-alt);
+}
+
+th {
+  text-align: left;
+  padding: var(--spacing-sm);
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-border);
+}
+
+td {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background: var(--color-bg-alt);
+}
+
+/* ============================================================================
+   ESTADOS DE PROYECTO
+   ============================================================================ */
+.estado-idea {
+  color: var(--color-text-light);
+  font-weight: 600;
+}
+
+.estado-mvp {
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+.estado-active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.estado-paused {
+  color: var(--color-text-light);
+  font-weight: 600;
+}
+
+.estado-killed {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.estado-winner {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+/* ============================================================================
+   DASHBOARD DE PROYECTO
+   ============================================================================ */
+.proyecto-header {
+  background: var(--color-bg-alt);
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-lg);
+}
+
+.proyecto-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.stat-card {
+  background: white;
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ============================================================================
+   UTILIDADES
+   ============================================================================ */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-lg);
+  color: var(--color-text-light);
+  font-style: italic;
+}
+
+.section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.section-title {
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.nav {
+  margin-bottom: var(--spacing-lg);
+}
+
+.nav a {
+  margin-right: var(--spacing-md);
+  font-weight: 600;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+@media (max-width: 768px) {
+  body {
+    padding: var(--spacing-sm);
+  }
+
+  .fase-banner h2 {
+    font-size: 1.25rem;
+  }
+
+  table {
+    font-size: 0.875rem;
+  }
+
+  th,
+  td {
+    padding: var(--spacing-xs);
+  }
+
+  .proyecto-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================================
+   HISTORIAL DE DECISIONES
+   ============================================================================ */
+.decision-card {
+  background: white;
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-sm);
+  border-left: 5px solid var(--color-border);
+}
+
+.accion-aceptada {
+  border-left-color: var(--color-success);
+}
+
+.accion-rechazada {
+  border-left-color: var(--color-danger);
+}
+
+.accion-pospuesta {
+  border-left-color: var(--color-warning);
+}
+
+.decision-card p {
+  margin-bottom: var(--spacing-xs);
+}
+
+.section-card {
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+}
+
+.section-subtitle {
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.btn-secondary {
+  background: #4b5563;
+}
+
+.btn-secondary:hover {
+  background: #374151;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

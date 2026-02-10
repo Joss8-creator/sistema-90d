@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{proyecto_nombre}} - Sistema 90D</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <!-- NAVEGACIÓN -->
+    <div class="nav">
+        <a href="/">← Volver al Dashboard</a>
+        <a href="/exportar-prompt">📥 Exportar Análisis</a>
+    </div>
+
+    <!-- HEADER DEL PROYECTO -->
+    <div class="proyecto-header">
+        <h1>{{proyecto_nombre}}</h1>
+        <p><strong>Hipótesis:</strong> {{proyecto_hipotesis}}</p>
+        <p><strong>Fecha inicio:</strong> {{proyecto_fecha_inicio}} | <strong>Estado:</strong> <span
+                class="estado-{{proyecto_estado}}">{{proyecto_estado}}</span></p>
+
+        <!-- Formulario para cambiar estado -->
+        <form method="POST" action="/proyecto/{{proyecto_id}}/actualizar" style="margin-top: 1rem;">
+            <div class="form-group">
+                <label for="estado">Cambiar Estado:</label>
+                <select id="estado" name="estado">
+                    {{estado_options}}
+                </select>
+                <button type="submit" style="margin-top: 0.5rem;">Actualizar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ALERTAS (NUEVO Fase 2) -->
+    {{alertas_html}}
+
+    <!-- DASHBOARD BÁSICO (P1) -->
+    <section class="section">
+        <h2 class="section-title">Métricas Consolidadas</h2>
+        <div class="proyecto-stats">
+            <div class="stat-card">
+                <div class="stat-label">Ingresos Totales</div>
+                <div class="stat-value">{{total_ingresos}}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tiempo Invertido</div>
+                <div class="stat-value">{{total_tiempo}}h</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">ROI</div>
+                <div class="stat-value">{{roi}}/h</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Conversiones</div>
+                <div class="stat-value">{{total_conversiones}}</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO NUEVA MÉTRICA (P0) -->
+    <section class="section">
+        <h2 class="section-title">Registrar Nueva Métrica</h2>
+        <form method="POST" action="/metrica/nueva">
+            <input type="hidden" name="proyecto_id" value="{{proyecto_id}}">
+
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" name="fecha" value="{{fecha_hoy}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ingresos">Ingresos (USD)</label>
+                <input type="number" id="ingresos" name="ingresos" step="0.01" min="0" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="tiempo_horas">Tiempo Invertido (horas)</label>
+                <input type="number" id="tiempo_horas" name="tiempo_horas" step="0.5" min="0" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="conversiones">Conversiones</label>
+                <input type="number" id="conversiones" name="conversiones" min="0" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="notas">Notas (opcional)</label>
+                <textarea id="notas" name="notas" placeholder="Ej: Lanzamiento en Product Hunt, 50 signups"></textarea>
+            </div>
+
+            <button type="submit">Registrar Métrica</button>
+        </form>
+    </section>
+
+    <!-- HISTORIAL DE MÉTRICAS -->
+    <section class="metricas-history">
+        <h2 class="section-title">Historial de Métricas</h2>
+        {{metricas_tabla}}
+    </section>
+
+    <!-- GESTIÓN DE DECISIONES (NUEVO) -->
+    <section class="section-card">
+        <h2 class="section-title">Registrar Decisión de IA</h2>
+        <p class="section-subtitle">Usa este formulario después de recibir el análisis de la IA externa.</p>
+        <form method="POST" action="/decisiones/responder">
+            <input type="hidden" name="proyecto_id" value="{{proyecto_id}}">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tipo">Decisión Sugerida</label>
+                    <select id="tipo" name="tipo">
+                        <option value="iterate">ITERATE (Fase Actual/Pivote)</option>
+                        <option value="kill">KILL (Cerrar Proyecto)</option>
+                        <option value="scale">SCALE (Escalar Ganador)</option>
+                        <option value="pause">PAUSE (Pausar)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="accion">Tu Respuesta</label>
+                    <select id="accion" name="accion" onchange="toggleRazonRechazo(this.value)">
+                        <option value="aceptada">Aceptar</option>
+                        <option value="rechazada">Rechazar</option>
+                        <option value="pospuesta">Posponer</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" id="group-razon-rechazo" style="display: none;">
+                <label for="razon_rechazo">Razón del Rechazo (Contexto para IA)</label>
+                <textarea id="razon_rechazo" name="razon_rechazo"
+                    placeholder="Ej: Esperando datos de una campaña específica..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="justificacion">Justificación/Resumen de la IA</label>
+                <textarea id="justificacion" name="justificacion" required
+                    placeholder="Copia aquí un breve resumen de por qué se sugiere esto..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-secondary">Registrar Decisión</button>
+        </form>
+    </section>
+
+    <section class="section-card">
+        <h2 class="section-title">Historial de Decisiones Estratégicas</h2>
+        {{decisiones_historial}}
+    </section>
+
+    <!-- SIMULADOR DE ESCENARIOS ROI (NUEVO Fase 3) -->
+    <section class="section-card" style="background: #f0fdf4; border-color: #bbf7d0;">
+        <h2 class="section-title" style="color: #166534;">🧪 Simulador de Escenarios (ROI Proyectado)</h2>
+        <p class="section-subtitle" style="color: #15803d;">Proyecta el retorno de tu tiempo basado en diferentes
+            ingresos.</p>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Ingresos Estimados ($)</label>
+                <input type="number" id="sim-ingresos" value="500" oninput="simularROI()">
+            </div>
+            <div class="form-group">
+                <label>Tiempo Invertido Actual (h)</label>
+                <input type="number" id="sim-tiempo" value="{{total_tiempo}}" readonly>
+            </div>
+        </div>
+
+        <div
+            style="background: white; padding: 1rem; border-radius: var(--radius); border: 1px solid #bbf7d0; text-align: center;">
+            <p style="font-size: 0.875rem; color: #166534; margin-bottom: 0.5rem;">ROI Proyectado con estos ingresos:
+            </p>
+            <span id="sim-resultado" style="font-size: 2rem; font-weight: 800; color: #166534;">$0.00/h</span>
+        </div>
+    </section>
+
+    <script>
+        function simularROI() {
+            const ingresos = parseFloat(document.getElementById('sim-ingresos').value) || 0;
+            const tiempo = parseFloat(document.getElementById('sim-tiempo').value) || 1; // Evitar div 0
+            const roi = ingresos / (tiempo || 1);
+            document.getElementById('sim-resultado').textContent = '$' + roi.toFixed(2) + '/h';
+
+            // Color dinámico
+            const res = document.getElementById('sim-resultado');
+            if (roi > 50) res.style.color = 'var(--color-success)';
+            else if (roi > 10) res.style.color = 'var(--color-primary)';
+            else if (roi > 0) res.style.color = 'var(--color-warning)';
+            else res.style.color = 'var(--color-danger)';
+        }
+        // Inicializar
+        window.addEventListener('load', simularROI);
+    </script>
+
+    <footer
+        style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); color: var(--color-text-light);">
+        <p><a href="/">← Volver al Dashboard</a></p>
+    </footer>
+</body>
+
+</html>

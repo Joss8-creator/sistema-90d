@@ -1,0 +1,50 @@
+<!-- /sistema_90d/templates/components/analisis_alertas.html -->
+
+<div class="cuadrante cuadrante-analisis">
+    <h2>🔔 Análisis y Alertas</h2>
+
+    <div class="alertas-container">
+        {% if alertas %}
+        <div style="margin-bottom: 24px;">
+            <h3 style="font-size: 14px; color: #e53e3e; text-transform: uppercase; margin-bottom: 12px;">🚨 Alertas
+                Recientes</h3>
+            {% for alerta in alertas %}
+            {% if not alerta.resuelta %}
+            <div
+                style="padding: 12px; border-radius: 8px; background: #fff5f5; border: 1px solid #feb2b2; margin-bottom: 10px; position: relative;">
+                <div style="font-weight: 700; font-size: 13px; color: #c53030; margin-bottom: 4px;">
+                    {{ alerta.tipo.upper() }}
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #2d3748;">{{ alerta.mensaje }}</p>
+                <a href="/proyecto/{{ alerta.proyecto_id }}"
+                    style="font-size: 12px; color: #2b6cb0; text-decoration: none; display: block; margin-top: 8px;">Ir
+                    al proyecto →</a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div
+            style="padding: 20px; background: #f0fff4; border-radius: 8px; border: 1px solid #c6f6d5; color: #276749; font-size: 14px; margin-bottom: 24px;">
+            ✅ No hay alertas críticas. Tu sistema está equilibrado.
+        </div>
+        {% endif %}
+
+        <!-- Consejos de Guía (Fase 3) -->
+        <div class="guia-seccion">
+            <h3 style="font-size: 14px; color: #718096; text-transform: uppercase; margin-bottom: 12px;">💡 Consejo
+                Estratégico</h3>
+            <div style="padding: 20px; background: #ebf8ff; border-radius: 12px; border-left: 6px solid #4299e1;">
+                <p style="font-style: italic; font-size: 15px; color: #2c5282; margin: 0;">"{{ guia.consejo }}"</p>
+            </div>
+
+            {% if guia.recomendaciones %}
+            <ul style="margin: 16px 0 0 0; padding-left: 20px; font-size: 13px; color: #4a5568;">
+                {% for rec in guia.recomendaciones %}
+                <li style="margin-bottom: 6px;">{{ rec }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>

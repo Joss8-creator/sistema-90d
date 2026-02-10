@@ -1,0 +1,78 @@
+<!-- /sistema_90d/templates/components/modal_nueva_metrica.html -->
+
+<!-- Modal Nueva Métrica -->
+<div id="modal-nueva-metrica" class="modal" style="display: none;">
+    <div class="modal-overlay" onclick="cerrarModal('modal-nueva-metrica')"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>💰 Registrar Métrica</h2>
+            <button class="modal-close" onclick="cerrarModal('modal-nueva-metrica')">&times;</button>
+        </div>
+
+        <form method="POST" action="/metrica/nueva">
+            <div class="form-group">
+                <label for="proyecto_id_metrica">Proyecto *</label>
+                <select id="proyecto_id_metrica" name="proyecto_id" required>
+                    <option value="">Selecciona un proyecto...</option>
+                    {% for proyecto in proyectos %}
+                    {% if proyecto.es_activo %}
+                    <option value="{{ proyecto.id }}">{{ proyecto.nombre }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_metrica">Fecha *</label>
+                <input type="date" id="fecha_metrica" name="fecha" value="{{ fecha_hoy }}" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ingresos">Ingresos (USD)</label>
+                    <input type="number" id="ingresos" name="ingresos" step="0.01" min="0" value="0" placeholder="0.00">
+                </div>
+
+                <div class="form-group">
+                    <label for="tiempo_horas_metrica">Tiempo (horas)</label>
+                    <input type="number" id="tiempo_horas_metrica" name="tiempo_horas" step="0.5" min="0" value="0"
+                        placeholder="0.0">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="conversiones">Conversiones</label>
+                <input type="number" id="conversiones" name="conversiones" min="0" value="0" placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label for="notas_metrica">Notas (opcional)</label>
+                <textarea id="notas_metrica" name="notas" rows="3"
+                    placeholder="Ej: Lanzamiento en Product Hunt, 50 signups"></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal('modal-nueva-metrica')">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    Registrar Métrica
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    @media (max-width: 640px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

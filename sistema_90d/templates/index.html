@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema 90D - Centro de Comando</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <!-- HTMX para interactividad sin recarga -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+
+<body>
+    {% if tiene_ciclo %}
+    <!-- Dashboard Normal -->
+    <div class="dashboard-container">
+
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="header-content">
+                <h1>Sistema 90D - Centro de Comando</h1>
+                <div class="header-stats">
+                    <span>Día {{ estado.ciclo.dia_actual }}/90</span>
+                    <span class="separator">•</span>
+                    <span>{{ estado.fase.icono }} {{ estado.fase.nombre }}</span>
+                    <span class="separator">•</span>
+                    <span>{{ estado.proyectos.activos }} proyectos activos</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="/ayuda" class="btn btn-ayuda"
+                    style="background: #48bb78; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; margin-right: 10px;">📖
+                    Ayuda</a>
+                <a href="/exportar-csv" class="btn"
+                    style="background: #e2e8f0; color: #4a5568; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600;">📊
+                    CSV</a>
+                <a href="/exportar-prompt" class="btn"
+                    style="background: #bee3f8; color: #2b6cb0; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; margin-left: 10px;">🤖
+                    Prompt IA</a>
+            </div>
+        </div>
+
+        <!-- Cuadrante 1: Estado del Sistema -->
+        {% include 'components/estado_sistema.html' %}
+
+        <!-- Cuadrante 2: Acciones Rápidas -->
+        {% include 'components/acciones_rapidas.html' %}
+
+        <!-- Cuadrante 3: Proyectos Activos (Tabla) -->
+        {% include 'components/proyectos_activos.html' %}
+
+        <!-- Cuadrante 4: Análisis y Alertas -->
+        {% include 'components/analisis_alertas.html' %}
+
+    </div>
+
+    <!-- Modales -->
+    {% include 'components/modal_nuevo_proyecto.html' %}
+    {% include 'components/modal_nueva_metrica.html' %}
+
+    <!-- Modales Legacy support -->
+    <div id="modal-container" style="display:none;"></div>
+
+    <script>
+        // Soporte para notificaciones y HTMX
+        document.body.addEventListener('htmx:afterRequest', function (evt) {
+            if (evt.detail.successful) {
+                // Podríamos mostrar un brindis o notificación
+            }
+        });
+    </script>
+    {% else %}
+    <!-- Pantalla de Inicio del Ciclo -->
+    {% include 'components/inicio_ciclo.html' %}
+    {% endif %}
+</body>
+
+</html>

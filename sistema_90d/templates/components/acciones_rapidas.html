@@ -1,0 +1,98 @@
+<!-- /sistema_90d/templates/components/acciones_rapidas.html -->
+
+<div class="cuadrante cuadrante-acciones">
+    <h2>⚡ Acciones Rápidas</h2>
+
+    <!-- Siguiente Acción Sugerida -->
+    <div class="accion-destacada accion-urgencia-{{ siguiente_accion.urgencia }}">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+            <h3 style="margin: 0; font-size: 16px;">{{ siguiente_accion.titulo }}</h3>
+            {% if siguiente_accion.tiempo_estimado %}
+            <span style="font-size: 12px; background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px;">⏱️ {{
+                siguiente_accion.tiempo_estimado }}</span>
+            {% endif %}
+        </div>
+        <p style="margin: 0 0 16px 0; font-size: 14px; color: #4a5568;">{{ siguiente_accion.descripcion }}</p>
+        {% if siguiente_accion.accion %}
+        <a href="{{ siguiente_accion.accion }}" class="btn"
+            style="background: #2d3748; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; display: inline-block; font-size: 14px; font-weight: 600;">
+            Hacerlo ahora →
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- Cuadrícula de botones -->
+    <div class="acciones-grid">
+        <button onclick="abrirModal('modal-nuevo-proyecto')" class="accion-btn">
+            <span class="accion-icono">➕</span>
+            <span class="accion-texto">Nuevo Proyecto</span>
+        </button>
+
+        <button onclick="abrirModal('modal-nueva-metrica')" class="accion-btn">
+            <span class="accion-icono">💰</span>
+            <span class="accion-texto">Registrar Métrica</span>
+        </button>
+
+        <button onclick="copiarPromptGlobal()" class="accion-btn">
+            <span class="accion-icono">🤖</span>
+            <span class="accion-texto">Prompt de Análisis</span>
+        </button>
+
+        <a href="/exportar-csv" class="accion-btn">
+            <span class="accion-icono">📊</span>
+            <span class="accion-texto">Exportar CSV</span>
+        </a>
+
+        <button onclick="ejecutarBackupManual()" class="accion-btn">
+            <span class="accion-icono">💾</span>
+            <span class="accion-texto">Crear Backup</span>
+        </button>
+
+        <a href="/health" target="_blank" class="accion-btn">
+            <span class="accion-icono">🔍</span>
+            <span class="accion-texto">Estado Salud</span>
+        </a>
+    </div>
+</div>
+
+<script>
+    function abrirModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'flex';
+            // Prevenir scroll del body cuando el modal está abierto
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function cerrarModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+            // Restaurar scroll del body
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    function copiarPromptGlobal() {
+        // Abrir el modal de IA que ya existe o mostrar un alert
+        window.location.href = '/exportar-prompt';
+    }
+
+    function ejecutarBackupManual() {
+        alert('Iniciando backup manual...');
+        // Aquí se podría hacer un fetch a una ruta de backup
+    }
+
+    // Cerrar modal con tecla ESC
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            const modales = document.querySelectorAll('.modal');
+            modales.forEach(modal => {
+                if (modal.style.display === 'flex') {
+                    cerrarModal(modal.id);
+                }
+            });
+        }
+    });
+</script>

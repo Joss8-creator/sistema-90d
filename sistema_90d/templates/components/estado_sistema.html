@@ -1,0 +1,82 @@
+<!-- /sistema_90d/templates/components/estado_sistema.html -->
+
+<div class="cuadrante cuadrante-estado">
+    <h2>📊 Estado del Sistema</h2>
+
+    <!-- Ciclo 90D -->
+    <div class="widget widget-ciclo">
+        <div class="widget-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="fase-badge"
+                style="background: #edf2f7; padding: 4px 10px; border-radius: 6px; font-weight: 600;">
+                {{ estado.fase.icono }} {{ estado.fase.nombre }}
+            </span>
+            <span class="dia-badge" style="color: #718096; font-size: 14px;">Día {{ estado.ciclo.dia_actual }}/90</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="ciclo-progress-bar" style="width: 0%;"></div>
+        </div>
+        <p class="progress-text" style="text-align: right; font-size: 12px; color: #718096; margin: 0;">{{
+            estado.ciclo.dias_restantes }} días restantes</p>
+        <script>
+            document.getElementById('ciclo-progress-bar').style.width = '{{ estado.ciclo.progreso_pct }}%';
+        </script>
+    </div>
+
+    <!-- Proyectos -->
+    <div class="widget widget-proyectos">
+        <h3>Proyectos</h3>
+        <div class="stats-grid">
+            <div class="stat">
+                <span class="stat-valor">{{ estado.proyectos.activos }}</span>
+                <span class="stat-label">Activos</span>
+            </div>
+            <div class="stat stat-winner">
+                <span class="stat-valor">{{ estado.proyectos.winners }}</span>
+                <span class="stat-label">Winners</span>
+            </div>
+            <div class="stat stat-killed">
+                <span class="stat-valor">{{ estado.proyectos.killed }}</span>
+                <span class="stat-label">Killed</span>
+            </div>
+            <div class="stat">
+                <span class="stat-valor">{{ estado.proyectos.total }}</span>
+                <span class="stat-label">Total</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas últimos 30 días -->
+    <div class="widget widget-metricas">
+        <h3>Últimos 30 días</h3>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span>💰 Ingresos</span>
+            <span style="font-weight: 600;">${{ estado.metricas_30d.ingresos_totales }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span>⏱️ Tiempo</span>
+            <span style="font-weight: 600;">{{ estado.metricas_30d.horas_totales }}h</span>
+        </div>
+        <div
+            style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid #e2e8f0; color: #2d3748; font-weight: 700;">
+            <span>📈 ROI Global</span>
+            <span>${{ estado.metricas_30d.roi_por_hora }}/h</span>
+        </div>
+    </div>
+
+    <!-- Adherencia -->
+    <div class="widget widget-adherencia">
+        <h3>Adherencia</h3>
+        <div class="adherencia-score adherencia-{{ estado.adherencia.status }}">
+            <span class="score-numero">{{ estado.adherencia.porcentaje }}%</span>
+            <span class="score-label">{{ estado.adherencia.dias_activos }}/30 días con datos</span>
+        </div>
+
+        <div style="font-size: 13px; color: #4a5568;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>📋 Rituales Diarios:</span>
+                <span style="font-weight: 600;">{{ estado.rituales.diarios_completados }}/30</span>
+            </div>
+        </div>
+    </div>
+</div>

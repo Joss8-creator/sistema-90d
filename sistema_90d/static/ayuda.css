@@ -1,0 +1,644 @@
+/* /sistema_90d/static/ayuda.css */
+
+/* Layout principal */
+.ayuda-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #f5f5f5;
+}
+
+/* Header */
+.ayuda-header {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.btn-volver {
+    padding: 10px 20px;
+    background: #2196F3;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-volver:hover {
+    background: #1976D2;
+}
+
+/* Navegación */
+.ayuda-nav {
+    display: flex;
+    gap: 0;
+    padding: 0 30px;
+    background: #fafafa;
+    overflow-x: auto;
+}
+
+.ayuda-nav a {
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.ayuda-nav a:hover {
+    color: #2196F3;
+    background: white;
+    border-bottom-color: #2196F3;
+}
+
+/* Contenido */
+.ayuda-content {
+    padding: 40px 30px;
+}
+
+.ayuda-seccion {
+    background: white;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.ayuda-seccion h2 {
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 32px;
+    color: #333;
+    border-bottom: 3px solid #2196F3;
+    padding-bottom: 15px;
+}
+
+/* Pasos (Inicio Rápido) */
+.paso-card {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid #2196F3;
+}
+
+.paso-numero {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: #2196F3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+.paso-contenido {
+    flex: 1;
+}
+
+.paso-contenido h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.paso-contenido > p {
+    margin: 0 0 15px 0;
+    color: #666;
+}
+
+.paso-instrucciones {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+
+.paso-instrucciones code {
+    display: block;
+    background: #263238;
+    color: #aed581;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+}
+
+.paso-instrucciones ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
+
+.paso-instrucciones li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.paso-ejemplo {
+    background: #fffde7;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #ffc107;
+    margin-top: 15px;
+}
+
+.paso-ejemplo strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #f57c00;
+}
+
+.paso-ejemplo pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #555;
+    white-space: pre-wrap;
+}
+
+.paso-nota {
+    margin-top: 15px;
+    padding: 12px;
+    background: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Dashboard Explicación */
+.dashboard-explicacion {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.cuadrante-explicacion {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border-top: 4px solid #2196F3;
+}
+
+.cuadrante-explicacion h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2196F3;
+}
+
+.cuadrante-explicacion ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.cuadrante-explicacion li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.cuadrante-explicacion strong {
+    color: #333;
+}
+
+/* Tabla de colores */
+.tabla-colores {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.tabla-colores td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.tabla-colores td:first-child {
+    width: 150px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge-active { background: #d4edda; color: #155724; }
+.badge-mvp { background: #fff3cd; color: #856404; }
+.badge-winner { background: #d1ecf1; color: #0c5460; }
+.badge-paused { background: #e2e3e5; color: #383d41; }
+.badge-killed { background: #f8d7da; color: #721c24; }
+
+/* Rituales */
+.ritual-card {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 4px solid #4CAF50;
+}
+
+.ritual-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #4CAF50;
+    font-size: 24px;
+}
+
+.ritual-card > p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.ritual-pasos {
+    margin: 20px 0;
+}
+
+.ritual-paso {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 6px;
+}
+
+.paso-check {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    background: #4CAF50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.ritual-paso strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.ritual-paso p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.ritual-ejemplo {
+    margin-top: 20px;
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #4CAF50;
+}
+
+.ritual-ejemplo strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #2e7d32;
+}
+
+.ritual-ejemplo pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #555;
+    white-space: pre-wrap;
+}
+
+/* Fases */
+.fases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.fase-detalle {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border-top: 4px solid #ff9800;
+}
+
+.fase-detalle h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #ff9800;
+}
+
+.fase-detalle ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.fase-detalle li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* IA */
+.ia-explicacion {
+    margin-bottom: 30px;
+}
+
+.ia-flujo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 30px 0;
+    overflow-x: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.ia-paso {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.ia-paso-num {
+    width: 40px;
+    height: 40px;
+    background: #9c27b0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    margin: 0 auto 10px auto;
+}
+
+.ia-paso-contenido {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    min-width: 180px;
+}
+
+.ia-paso-contenido strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 14px;
+}
+
+.ia-paso-contenido p {
+    margin: 0;
+    color: #666;
+    font-size: 12px;
+}
+
+.ia-flecha {
+    flex-shrink: 0;
+    font-size: 24px;
+    color: #9c27b0;
+}
+
+.ia-tipos {
+    margin: 30px 0;
+}
+
+.analisis-card {
+    background: #f3e5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #9c27b0;
+}
+
+.analisis-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #9c27b0;
+}
+
+.analisis-card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.ia-recomendaciones table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.ia-recomendaciones th,
+.ia-recomendaciones td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ia-recomendaciones th {
+    background: #f5f5f5;
+    font-weight: 600;
+}
+
+/* Tips */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.tip-card {
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.tip-card h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.tip-card ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.tip-card li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.tip-success {
+    background: #e8f5e9;
+    border-left-color: #4CAF50;
+}
+
+.tip-success h4 { color: #2e7d32; }
+
+.tip-danger {
+    background: #ffebee;
+    border-left-color: #f44336;
+}
+
+.tip-danger h4 { color: #c62828; }
+
+.tip-warning {
+    background: #fff3e0;
+    border-left-color: #ff9800;
+}
+
+.tip-warning h4 { color: #e65100; }
+
+.tip-info {
+    background: #e3f2fd;
+    border-left-color: #2196F3;
+}
+
+.tip-info h4 { color: #1565c0; }
+
+/* Troubleshooting */
+.troubleshooting-item {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #ff5722;
+}
+
+.troubleshooting-item h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #ff5722;
+}
+
+.solucion {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.solucion p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.solucion pre {
+    background: #263238;
+    color: #aed581;
+    padding: 15px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 10px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+}
+
+.solucion ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.solucion li {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* Soporte */
+.ayuda-soporte {
+    margin-top: 40px;
+    padding: 30px;
+    background: #f0f4f8;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.ayuda-soporte h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.soporte-opciones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-soporte {
+    padding: 12px 24px;
+    background: white;
+    color: #2196F3;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    border: 2px solid #2196F3;
+    transition: all 0.2s;
+}
+
+.btn-soporte:hover {
+    background: #2196F3;
+    color: white;
+}
+
+/* Footer */
+.ayuda-footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.ayuda-footer p {
+    margin: 5px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-explicacion,
+    .fases-grid,
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ia-flujo {
+        flex-direction: column;
+    }
+    
+    .ia-flecha {
+        transform: rotate(90deg);
+    }
+    
+    .ayuda-nav {
+        flex-wrap: wrap;
+    }
+}

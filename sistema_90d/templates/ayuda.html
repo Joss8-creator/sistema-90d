@@ -1,0 +1,582 @@
+<!-- /sistema_90d/templates/ayuda.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo Usar el Sistema 90D</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/ayuda.css">
+</head>
+<body>
+    <div class="ayuda-container">
+        
+        <!-- Header con navegación -->
+        <header class="ayuda-header">
+            <div class="header-content">
+                <h1>📖 Guía de Uso - Sistema 90D</h1>
+                <a href="/" class="btn-volver">← Volver al Dashboard</a>
+            </div>
+            
+            <!-- Navegación rápida -->
+            <nav class="ayuda-nav">
+                <a href="#inicio-rapido">🚀 Inicio Rápido</a>
+                <a href="#dashboard">📊 Dashboard</a>
+                <a href="#rituales">📋 Rituales</a>
+                <a href="#ia">🤖 IA</a>
+                <a href="#tips">💡 Tips</a>
+                <a href="#troubleshooting">🔧 Problemas</a>
+            </nav>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="ayuda-content">
+            
+            <!-- Inicio Rápido -->
+            <section id="inicio-rapido" class="ayuda-seccion">
+                <h2>🚀 Inicio Rápido (5 minutos)</h2>
+                
+                <div class="paso-card">
+                    <div class="paso-numero">1</div>
+                    <div class="paso-contenido">
+                        <h3>Crear tu Primer Proyecto</h3>
+                        <p>Un proyecto es cualquier idea/MVP/producto que estés validando.</p>
+                        <div class="paso-instrucciones">
+                            <code>Dashboard → ➕ Nuevo Proyecto</code>
+                            <ul>
+                                <li><strong>Nombre:</strong> Descriptivo y corto (ej: "Landing SaaS X")</li>
+                                <li><strong>Hipótesis:</strong> ¿Qué problema resuelves? ¿Quién paga?</li>
+                                <li><strong>Estado inicial:</strong> "idea" (cambiará a "mvp" cuando lances)</li>
+                            </ul>
+                        </div>
+                        <div class="paso-ejemplo">
+                            <strong>Ejemplo:</strong>
+                            <pre>
+Nombre: "Email Automation Tool"
+Hipótesis: "Marketers pagan $29/mes por automatización sin código"
+Estado: idea
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso-card">
+                    <div class="paso-numero">2</div>
+                    <div class="paso-contenido">
+                        <h3>Registrar tu Primera Métrica</h3>
+                        <p>Las métricas alimentan el sistema. Sin datos, no hay decisiones.</p>
+                        <div class="paso-instrucciones">
+                            <code>Dashboard → 💰 Registrar Métrica</code>
+                            <ul>
+                                <li><strong>Fecha:</strong> Día del registro (hoy por defecto)</li>
+                                <li><strong>Tiempo invertido:</strong> Horas trabajadas en el proyecto</li>
+                                <li><strong>Ingresos:</strong> $ generados ese día ($0 si ninguno)</li>
+                                <li><strong>Conversiones:</strong> Sign-ups, ventas, cualquier conversión</li>
+                            </ul>
+                        </div>
+                        <div class="paso-ejemplo">
+                            <strong>Ejemplo día 1:</strong>
+                            <pre>
+Proyecto: Email Automation Tool
+Fecha: 2025-02-03
+Tiempo: 4h (diseñando landing)
+Ingresos: $0
+Conversiones: 0
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso-card">
+                    <div class="paso-numero">3</div>
+                    <div class="paso-contenido">
+                        <h3>Completar el Ritual Diario</h3>
+                        <p>5-10 minutos al final del día. Mantiene el sistema actualizado.</p>
+                        <div class="paso-instrucciones">
+                            <code>Dashboard → 📋 Ritual Diario</code>
+                            <ul>
+                                <li>Registra métricas de todos los proyectos activos</li>
+                                <li>Revisa alertas pendientes</li>
+                                <li>Click "✅ Completar Ritual"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso-card">
+                    <div class="paso-numero">4</div>
+                    <div class="paso-contenido">
+                        <h3>Hacer tu Primer Análisis Semanal</h3>
+                        <p>Después de 7 días con métricas, usa IA para análisis profundo.</p>
+                        <div class="paso-instrucciones">
+                            <code>Dashboard → 🤖 Análisis Semanal → Copiar prompt → Pegar en ChatGPT/Claude</code>
+                        </div>
+                        <p class="paso-nota">
+                            <strong>Nota:</strong> El análisis IA es opcional. El motor local ya detecta señales automáticamente.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Explicado -->
+            <section id="dashboard" class="ayuda-seccion">
+                <h2>📊 Entendiendo el Dashboard</h2>
+                
+                <div class="dashboard-explicacion">
+                    <div class="cuadrante-explicacion">
+                        <h3>📊 Cuadrante 1: Estado del Sistema</h3>
+                        <p><strong>¿Qué muestra?</strong></p>
+                        <ul>
+                            <li><strong>Día del Ciclo:</strong> "Día 34/90" - Qué tan avanzado estás</li>
+                            <li><strong>Fase Actual:</strong> Exploración (1-14) → Experimentación (15-45) → Decisión (46-75) → Consolidación (76-90)</li>
+                            <li><strong>Proyectos:</strong> Cuántos activos, winners, killed</li>
+                            <li><strong>Métricas 30d:</strong> Ingresos y ROI del último mes</li>
+                            <li><strong>Adherencia:</strong> % de días que usaste el sistema</li>
+                            <li><strong>Salud:</strong> Estado de la base de datos</li>
+                        </ul>
+                        <p><strong>¿Para qué sirve?</strong></p>
+                        <p>Contexto instantáneo. Sabes dónde estás sin buscar.</p>
+                    </div>
+
+                    <div class="cuadrante-explicacion">
+                        <h3>⚡ Cuadrante 2: Acciones Rápidas</h3>
+                        <p><strong>¿Qué muestra?</strong></p>
+                        <ul>
+                            <li><strong>Siguiente Acción:</strong> Lo más importante que debes hacer AHORA</li>
+                            <li><strong>Registros:</strong> Métrica, proyecto, ritual diario</li>
+                            <li><strong>Análisis IA:</strong> Generar prompts para análisis</li>
+                            <li><strong>Gestión:</strong> Clasificar proyectos, ejecutar motor</li>
+                            <li><strong>Datos:</strong> Backups, exports, configuración</li>
+                        </ul>
+                        <p><strong>¿Para qué sirve?</strong></p>
+                        <p>Todo a 1-2 clics. No navegas, ejecutas.</p>
+                    </div>
+
+                    <div class="cuadrante-explicacion">
+                        <h3>🎯 Cuadrante 3: Proyectos Activos</h3>
+                        <p><strong>¿Qué muestra?</strong></p>
+                        <ul>
+                            <li><strong>Tabla filtrable:</strong> Activos/Winners/Pausados/Killed</li>
+                            <li><strong>Métricas clave:</strong> Ingresos, Horas, ROI/h</li>
+                            <li><strong>Señales:</strong> Alertas automáticas (⚠️ 🚨)</li>
+                            <li><strong>Acciones rápidas:</strong> Menú ⋮ por proyecto</li>
+                        </ul>
+                        <p><strong>¿Para qué sirve?</strong></p>
+                        <p>Vista completa de tu portfolio. Detectas rápido qué necesita atención.</p>
+                    </div>
+
+                    <div class="cuadrante-explicacion">
+                        <h3>🔔 Cuadrante 4: Análisis y Alertas</h3>
+                        <p><strong>¿Qué muestra?</strong></p>
+                        <ul>
+                            <li><strong>Alertas Críticas:</strong> Problemas que necesitan decisión YA</li>
+                            <li><strong>Insights IA:</strong> Recomendaciones pendientes de aceptar/rechazar</li>
+                            <li><strong>Tendencias:</strong> Gráfico de ingresos últimos 7 días</li>
+                            <li><strong>Próximos Hitos:</strong> Transiciones de fase, fin de ciclo</li>
+                        </ul>
+                        <p><strong>¿Para qué sirve?</strong></p>
+                        <p>El sistema te dice QUÉ necesita decisión AHORA.</p>
+                    </div>
+                </div>
+
+                <!-- Códigos de colores -->
+                <div class="ayuda-subseccion">
+                    <h3>🎨 Códigos de Color</h3>
+                    <table class="tabla-colores">
+                        <tr>
+                            <td><span class="badge badge-active">active</span></td>
+                            <td>Proyecto en ejecución activa</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-mvp">mvp</span></td>
+                            <td>MVP lanzado, validando</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-winner">winner</span></td>
+                            <td>Proyecto escalando, foco principal</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-paused">paused</span></td>
+                            <td>Pausado temporalmente</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-killed">killed</span></td>
+                            <td>Cancelado (aprendizaje documentado)</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Rituales Operativos -->
+            <section id="rituales" class="ayuda-seccion">
+                <h2>📋 Rituales Operativos</h2>
+                
+                <div class="ritual-card">
+                    <h3>📅 Ritual Diario (5-10 minutos)</h3>
+                    <p><strong>Cuándo:</strong> Al final del día laboral</p>
+                    <p><strong>Objetivo:</strong> Mantener datos actualizados sin acumular registros pendientes</p>
+                    
+                    <div class="ritual-pasos">
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Registrar métricas del día</strong>
+                                <p>¿Trabajaste en algún proyecto? → Registra tiempo e ingresos</p>
+                            </div>
+                        </div>
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Revisar alertas</strong>
+                                <p>¿Hay señales críticas nuevas? → Tomar nota mental</p>
+                            </div>
+                        </div>
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Completar ritual</strong>
+                                <p>Click en "✅ Completar" → Sistema registra adherencia</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ritual-ejemplo">
+                        <strong>Ejemplo real:</strong>
+                        <pre>
+Hoy trabajé 3h en "Email Tool", 2h en "Landing Builder"
+Email Tool: $0 ingresos, 1 conversión
+Landing Builder: $15 (primera venta!), 1 conversión
+Total: 5 minutos registrando
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <h3>📊 Ritual Semanal (15-30 minutos)</h3>
+                    <p><strong>Cuándo:</strong> Domingo tarde o Lunes mañana</p>
+                    <p><strong>Objetivo:</strong> Tomar decisiones basadas en datos de la semana</p>
+                    
+                    <div class="ritual-pasos">
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Generar análisis IA</strong>
+                                <p>Dashboard → 🤖 Análisis Semanal → Copiar prompt</p>
+                            </div>
+                        </div>
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Obtener recomendaciones</strong>
+                                <p>Pegar en ChatGPT/Claude → Copiar respuesta JSON</p>
+                            </div>
+                        </div>
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Procesar respuesta</strong>
+                                <p>Dashboard → 📥 Pegar Respuesta IA → Procesar</p>
+                            </div>
+                        </div>
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Tomar decisiones</strong>
+                                <p>Para cada proyecto: ✓ Aceptar / ✗ Rechazar / ⏭️ Posponer</p>
+                            </div>
+                        </div>
+                        <div class="ritual-paso">
+                            <span class="paso-check">✓</span>
+                            <div>
+                                <strong>Planear próxima semana</strong>
+                                <p>¿Qué proyecto priorizo? ¿Qué experimento lanzo?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <h3>🎯 Ritual de Transición de Fase</h3>
+                    <p><strong>Cuándo:</strong> Días 15, 46, 76 (cambios de fase)</p>
+                    
+                    <div class="fases-grid">
+                        <div class="fase-detalle">
+                            <h4>Día 15: Exploración → Experimentación</h4>
+                            <ul>
+                                <li>Seleccionar 2-3 ideas para MVPs</li>
+                                <li>Definir criterios de kill</li>
+                                <li>Configurar umbrales</li>
+                            </ul>
+                        </div>
+                        <div class="fase-detalle">
+                            <h4>Día 46: Experimentación → Decisión</h4>
+                            <ul>
+                                <li>Clasificar TODOS los proyectos</li>
+                                <li>Ejecutar kills sin remordimiento</li>
+                                <li>Documentar aprendizajes</li>
+                            </ul>
+                        </div>
+                        <div class="fase-detalle">
+                            <h4>Día 76: Decisión → Consolidación</h4>
+                            <ul>
+                                <li>Declarar 1-2 Winners</li>
+                                <li>Matar/pausar todo lo demás</li>
+                                <li>Plan de escalado del winner</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Integración IA -->
+            <section id="ia" class="ayuda-seccion">
+                <h2>🤖 Integración con IA</h2>
+                
+                <div class="ia-explicacion">
+                    <h3>¿Cómo funciona?</h3>
+                    <p>El sistema NO ejecuta IAs directamente. Tú controlas qué IA usas y cuándo.</p>
+                    
+                    <div class="ia-flujo">
+                        <div class="ia-paso">
+                            <div class="ia-paso-num">1</div>
+                            <div class="ia-paso-contenido">
+                                <strong>Sistema genera prompt</strong>
+                                <p>Incluye: contexto del ciclo, métricas, reglas del Documento Base</p>
+                            </div>
+                        </div>
+                        <div class="ia-flecha">→</div>
+                        <div class="ia-paso">
+                            <div class="ia-paso-num">2</div>
+                            <div class="ia-paso-contenido">
+                                <strong>Usuario copia prompt</strong>
+                                <p>Click "📋 Copiar al Portapapeles"</p>
+                            </div>
+                        </div>
+                        <div class="ia-flecha">→</div>
+                        <div class="ia-paso">
+                            <div class="ia-paso-num">3</div>
+                            <div class="ia-paso-contenido">
+                                <strong>Usuario pega en IA</strong>
+                                <p>ChatGPT, Claude, Gemini, Llama...</p>
+                            </div>
+                        </div>
+                        <div class="ia-flecha">→</div>
+                        <div class="ia-paso">
+                            <div class="ia-paso-num">4</div>
+                            <div class="ia-paso-contenido">
+                                <strong>IA retorna JSON</strong>
+                                <p>Análisis estructurado con decisiones</p>
+                            </div>
+                        </div>
+                        <div class="ia-flecha">→</div>
+                        <div class="ia-paso">
+                            <div class="ia-paso-num">5</div>
+                            <div class="ia-paso-contenido">
+                                <strong>Usuario pega respuesta</strong>
+                                <p>Sistema valida, parsea y almacena</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ia-tipos">
+                    <h3>Tipos de Análisis Disponibles</h3>
+                    
+                    <div class="analisis-card">
+                        <h4>📊 Análisis Semanal</h4>
+                        <p><strong>Genera:</strong> Recomendación kill/iterate/scale para cada proyecto</p>
+                        <p><strong>Usa:</strong> Métricas de últimos 30 días + decisiones previas</p>
+                        <p><strong>Retorna:</strong> JSON con clasificación y siguiente acción</p>
+                    </div>
+
+                    <div class="analisis-card">
+                        <h4>🎯 Decisión Kill/Iterate/Scale</h4>
+                        <p><strong>Genera:</strong> Análisis profundo de un proyecto específico</p>
+                        <p><strong>Usa:</strong> Todas las métricas históricas + tendencias</p>
+                        <p><strong>Retorna:</strong> Recomendación binaria con justificación</p>
+                    </div>
+
+                    <div class="analisis-card">
+                        <h4>⚠️ Detección de Riesgos</h4>
+                        <p><strong>Genera:</strong> Análisis de dependencias peligrosas</p>
+                        <p><strong>Usa:</strong> Distribución de ingresos, fuentes de tráfico</p>
+                        <p><strong>Retorna:</strong> Lista de riesgos con severidad y mitigación</p>
+                    </div>
+                </div>
+
+                <div class="ia-recomendaciones">
+                    <h3>¿Qué IA usar?</h3>
+                    <table>
+                        <tr>
+                            <th>IA</th>
+                            <th>Pros</th>
+                            <th>Contras</th>
+                            <th>Recomendación</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Claude</strong></td>
+                            <td>Mejor adherencia a formato JSON, análisis profundo</td>
+                            <td>Requiere cuenta paga ($20/mes)</td>
+                            <td>⭐ Mejor opción</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ChatGPT</strong></td>
+                            <td>Versión gratuita disponible, rápido</td>
+                            <td>A veces ignora formato, más superficial</td>
+                            <td>✅ Buena para empezar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gemini</strong></td>
+                            <td>Gratuito, contexto largo</td>
+                            <td>Menos confiable en formato estructurado</td>
+                            <td>⚠️ Experimental</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Llama (local)</strong></td>
+                            <td>100% privado, costo $0</td>
+                            <td>Requiere GPU, setup complejo</td>
+                            <td>🔒 Para usuarios avanzados</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tips y Mejores Prácticas -->
+            <section id="tips" class="ayuda-seccion">
+                <h2>💡 Tips y Mejores Prácticas</h2>
+                
+                <div class="tips-grid">
+                    <div class="tip-card tip-success">
+                        <h4>✅ Haz Esto</h4>
+                        <ul>
+                            <li>Registra métricas TODOS LOS DÍAS (incluso si es $0)</li>
+                            <li>Mata proyectos rápido cuando no hay tracción</li>
+                            <li>Confía en los datos, no en tu intuición</li>
+                            <li>Limita proyectos activos a 3 máximo</li>
+                            <li>Haz backups semanales manuales (además de automáticos)</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-card tip-danger">
+                        <h4>❌ Evita Esto</h4>
+                        <ul>
+                            <li>Acumular días sin registrar métricas</li>
+                            <li>Persistir en proyecto sin ingresos >30 días</li>
+                            <li>Ignorar recomendaciones de IA sin justificación</li>
+                            <li>Tener >5 proyectos activos simultáneamente</li>
+                            <li>Cambiar umbrales para evitar kills</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-card tip-warning">
+                        <h4>⚠️ Señales de Alerta</h4>
+                        <ul>
+                            <li><strong>Adherencia <50%:</strong> No estás usando el sistema consistentemente</li>
+                            <li><strong>Proyecto zombie:</strong> Sin decisión en >30 días = procrastinación</li>
+                            <li><strong>Concentración >80%:</strong> Dependes demasiado de un proyecto</li>
+                            <li><strong>ROI <$10/h:</strong> Tu tiempo vale más que eso</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-card tip-info">
+                        <h4>💎 Pro Tips</h4>
+                        <ul>
+                            <li>Documenta RAZÓN de kill (aprenderás patrones)</li>
+                            <li>Rechaza sugerencias de IA con razón clara</li>
+                            <li>Exporta CSV mensualmente para análisis externo</li>
+                            <li>Revisa proyectos killed cada 3 meses (aprendizajes)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="ayuda-seccion">
+                <h2>🔧 Solución de Problemas</h2>
+                
+                <div class="troubleshooting-item">
+                    <h4>❓ Dashboard no carga datos</h4>
+                    <div class="solucion">
+                        <p><strong>Causa probable:</strong> Base de datos vacía o corrupta</p>
+                        <p><strong>Solución:</strong></p>
+                        <pre>
+# Verificar integridad
+sqlite3 data/sistema.db "PRAGMA integrity_check;"
+
+# Si corrupta, restaurar backup
+gunzip -c data/backups/[ultimo].db.gz > data/sistema.db
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <h4>❓ Error: "Database is locked"</h4>
+                    <div class="solucion">
+                        <p><strong>Causa probable:</strong> Múltiples procesos accediendo a DB</p>
+                        <p><strong>Solución:</strong></p>
+                        <pre>
+# Cerrar todos los procesos
+pkill -f "python3 app.py"
+
+# Reiniciar
+python3 app.py
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <h4>❓ Modal de IA no abre</h4>
+                    <div class="solucion">
+                        <p><strong>Causa probable:</strong> htmx no cargó desde CDN</p>
+                        <p><strong>Solución:</strong></p>
+                        <pre>
+# Descargar htmx localmente
+wget https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js
+mv htmx.min.js static/
+
+# Actualizar template para usar local en vez de CDN
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <h4>❓ Motor de métricas no detecta señales</h4>
+                    <div class="solucion">
+                        <p><strong>Causa probable:</strong> Datos insuficientes (<3 métricas por proyecto)</p>
+                        <p><strong>Solución:</strong></p>
+                        <ul>
+                            <li>Registra al menos 3 métricas por proyecto</li>
+                            <li>Espera 7+ días para análisis de tendencias</li>
+                            <li>Verifica umbrales en Configuración</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ayuda-soporte">
+                    <h3>¿Necesitas más ayuda?</h3>
+                    <div class="soporte-opciones">
+                        <a href="/health" target="_blank" class="btn-soporte">
+                            🏥 Verificar Salud del Sistema
+                        </a>
+                        <a href="https://github.com/tu-usuario/sistema-90d/issues" target="_blank" class="btn-soporte">
+                            🐛 Reportar Bug en GitHub
+                        </a>
+                        <a href="/README.md" target="_blank" class="btn-soporte">
+                            📖 Documentación Completa
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="ayuda-footer">
+            <p>Sistema 90D - Decide mejor, más rápido</p>
+            <p>Basado en la metodología de Marc Lou</p>
+        </footer>
+
+    </div>
+</body>
+</html>
