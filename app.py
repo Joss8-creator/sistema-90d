@@ -667,8 +667,15 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
             resultado = generador.generar_ideas(cantidad)
             
             if resultado['success']:
+                # Pre-calcular valores para el motor de plantillas simple
+                ideas = resultado['ideas']
+                cantidad_ideas = len(ideas)
+                contexto_texto = "(relacionadas a tus proyectos)" if resultado['contexto'] == 'con_proyectos' else "(ideas nuevas)"
+                
                 html = render_template('components/ideas_generadas.html', {
-                    'ideas': resultado['ideas'],
+                    'ideas': ideas,
+                    'cantidad_ideas': cantidad_ideas,
+                    'contexto_texto': contexto_texto,
                     'contexto': resultado['contexto']
                 })
                 self.send_response(200)

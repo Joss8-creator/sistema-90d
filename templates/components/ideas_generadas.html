@@ -2,12 +2,7 @@
     <div class="ideas-header">
         <h2>💡 Ideas Generadas</h2>
         <span class="ideas-badge">
-            {{ ideas|length }} ideas
-            {% if contexto == 'con_proyectos' %}
-            (relacionadas a tus proyectos)
-            {% else %}
-            (ideas nuevas)
-            {% endif %}
+            {{ cantidad_ideas }} ideas {{ contexto_texto }}
         </span>
     </div>
 

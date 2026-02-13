@@ -19,6 +19,7 @@
 - ✅ **Exportación CSV** - Datos listos para análisis externo
 - ✅ **Sistema de Alertas** - Detección de proyectos zombie y métricas insuficientes
 - ✅ **Zero Dependencies** - Solo Python 3.11+ stdlib
+- ✅ **Integración Gemini CLI** - Análisis automático y generación de ideas (Opcional)
 
 ---
 
@@ -50,14 +51,21 @@ El Sistema 90D es tu centro de comando para validar ideas y construir proyectos 
 
 - **Python 3.11 o superior**
 - Navegador web moderno
-- **Ninguna dependencia externa** 🎉
+- Navegador web moderno
+- **Ninguna dependencia externa** 🎉 (para funciones base)
+- **Gemini CLI** (opcional, para funciones de IA)
 
 ### Instalación
 
 ```bash
 # Clonar o descargar el proyecto
+# Clonar o descargar el proyecto
 git clone https://github.com/tu-usuario/sistema-90d.git
 cd sistema-90d
+
+# (Opcional) Instalar Gemini CLI para funciones de IA
+pip install gemini-cli --break-system-packages
+gemini setup  # Configurar API Key
 
 # Iniciar servidor (¡así de simple!)
 python3 app.py
@@ -128,6 +136,23 @@ Después de recibir recomendaciones de la IA:
 4. Acepta, rechaza o pospone la decisión
 5. El sistema actualizará el estado del proyecto automáticamente
 
+### 6. Funciones de IA con Gemini CLI
+
+Si tienes instalado y configurado `gemini-cli`, puedes acceder a funciones avanzadas:
+
+#### 💡 Generador de Ideas
+1. Ve a **"💡 Generar Ideas"** en Acciones Rápidas.
+2. Selecciona cuántas ideas quieres generar.
+3. El sistema analizará tus proyectos actuales para sugerir ideas complementarias o nuevas tendencias.
+4. Puedes crear un proyecto directamente desde la idea generada.
+
+#### 🤖 Análisis Automático
+1. Ve a **"🤖 Analizar (Gemini)"** en Acciones Rápidas.
+2. El sistema ejecutará un análisis profundo de todos tus proyectos, métricas y decisiones recientes.
+3. Recibirás un resumen ejecutivo, decisiones sugeridas (Kill/Iterate/Winner) y riesgos detectados.
+4. Puedes aceptar o rechazar las decisiones con un clic.
+
+
 ---
 
 ## 📁 Estructura del Proyecto
@@ -138,6 +163,9 @@ sistema_90d/
 ├── database.py                 # Gestión de SQLite
 ├── dashboard_data.py           # Datos para el dashboard
 ├── prompt_generator.py         # Generador de prompts IA
+├── analisis_ia_gemini.py       # Análisis automático (Gemini CLI)
+├── generador_ideas.py          # Generador de ideas (Gemini CLI)
+├── gemini_integration.py       # Wrapper para Gemini CLI
 ├── guia.py                     # Guía contextual
 ├── backup.py                   # Sistema de backups automáticos
 ├── validadores.py              # Validación de datos
