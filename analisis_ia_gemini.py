@@ -1,6 +1,6 @@
 from gemini_integration import GeminiCLI
-from prompt_generator import GeneradorPrompts
-from database import get_db, transaccion_segura
+import prompt_generator as pg
+from database import transaccion_segura
 import logging
 from typing import Dict
 
@@ -15,7 +15,7 @@ class AnalizadorGemini:
     def __init__(self, db_path: str):
         self.db_path = db_path
         self.gemini = GeminiCLI(yolo_mode=True)
-        self.generador = GeneradorPrompts(db_path)
+        # self.generador removed, using module directly
     
     def analisis_semanal_automatico(self) -> Dict:
         """
@@ -36,7 +36,7 @@ class AnalizadorGemini:
         inicio = time.time()
         
         # 1. Generar prompt
-        prompt = self.generador.generar_analisis_semanal()
+        prompt = pg.generar_prompt_analisis()
         logger.debug(f"Prompt generado: {len(prompt)} caracteres")
         
         # 2. Ejecutar en Gemini

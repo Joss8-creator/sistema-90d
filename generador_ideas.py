@@ -1,5 +1,5 @@
 from gemini_integration import GeminiCLI
-from database import get_db
+from database import get_connection
 import logging
 from typing import Dict
 
@@ -85,57 +85,59 @@ class GeneradorIdeas:
     
     def _obtener_contexto_proyectos(self) -> Dict:
         """Obtiene información de proyectos existentes."""
-        db = get_db()
-        
-        # Proyectos activos/winners
-        cursor = db.execute("""
-            SELECT 
-                p.id,
-                p.nombre,
-                p.hipotesis,
-                p.estado,
-                COALESCE(SUM(m.ingresos), 0) as ingresos_total
-            FROM proyectos p
-            LEFT JOIN metricas m ON m.proyecto_id = p.id
-            WHERE p.estado IN ('active', 'mvp', 'winner')
-            GROUP BY p.id
-            ORDER BY ingresos_total DESC
-            LIMIT 5
-        """)
-        
-        proyectos_activos = [
-            {
-                'nombre': row[1],
-                'hipotesis': row[2],
-                'estado': row[3],
-                'ingresos': row[4]
-            }
-            for row in cursor.fetchall()
-        ]
-        
-        # Proyectos killed (aprendizajes)
+        db = get_connection()
         try:
-            # Check if razon_kill column exists, if not, handle gracefully
+            # Proyectos activos/winners
             cursor = db.execute("""
-                SELECT nombre, razon_kill
-                FROM proyectos
-                WHERE estado = 'killed'
-                ORDER BY fecha_kill DESC
-                LIMIT 3
+                SELECT 
+                    p.id,
+                    p.nombre,
+                    p.hipotesis,
+                    p.estado,
+                    COALESCE(SUM(m.ingresos), 0) as ingresos_total
+                FROM proyectos p
+                LEFT JOIN metricas m ON m.proyecto_id = p.id
+                WHERE p.estado IN ('active', 'mvp', 'winner')
+                GROUP BY p.id
+                ORDER BY ingresos_total DESC
+                LIMIT 5
             """)
-            proyectos_killed = [
-                {'nombre': row[0], 'razon': row[1]}
+            
+            proyectos_activos = [
+                {
+                    'nombre': row[1],
+                    'hipotesis': row[2],
+                    'estado': row[3],
+                    'ingresos': row[4]
+                }
                 for row in cursor.fetchall()
             ]
-        except Exception:
-            # Fallback if column doesn't exist yet
-            proyectos_killed = []
-        
-        return {
-            'tiene_proyectos': len(proyectos_activos) > 0,
-            'proyectos_activos': proyectos_activos,
-            'proyectos_killed': proyectos_killed
-        }
+            
+            # Proyectos killed (aprendizajes)
+            try:
+                # Check if razon_kill column exists, if not, handle gracefully
+                cursor = db.execute("""
+                    SELECT nombre, razon_kill
+                    FROM proyectos
+                    WHERE estado = 'killed'
+                    ORDER BY fecha_kill DESC
+                    LIMIT 3
+                """)
+                proyectos_killed = [
+                    {'nombre': row[0], 'razon': row[1]}
+                    for row in cursor.fetchall()
+                ]
+            except Exception:
+                # Fallback if column doesn't exist yet
+                proyectos_killed = []
+                
+            return {
+                'tiene_proyectos': len(proyectos_activos) > 0,
+                'proyectos_activos': proyectos_activos,
+                'proyectos_killed': proyectos_killed
+            }
+        finally:
+            db.close()
     
     def _prompt_ideas_relacionadas(self, contexto: Dict, cantidad: int) -> str:
         """Genera prompt para ideas relacionadas a proyectos existentes."""
