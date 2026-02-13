@@ -36,7 +36,7 @@ class AnalizadorGemini:
         inicio = time.time()
         
         # 1. Generar prompt
-        prompt = pg.generar_prompt_analisis()
+        prompt = pg.generar_prompt_analisis(formato_json=True)
         logger.debug(f"Prompt generado: {len(prompt)} caracteres")
         
         # 2. Ejecutar en Gemini
@@ -114,16 +114,19 @@ class AnalizadorGemini:
         # pero para simplificar, usaremos la importada arriba
         with transaccion_segura() as db:
             for proyecto in analisis['proyectos']:
-                # Verificar si ya existe decisión pendiente para este proyecto hoy?
-                # Por ahora simplificamos insertando siempre
+                # Mapear 'winner' a 'scale' si es necesario para consistencia con DB
+                decision_tipo = proyecto['decision']
+                if decision_tipo == 'winner':
+                    decision_tipo = 'scale'
+                    
                 try:
                     db.execute("""
-                        INSERT INTO decisiones (proyecto_id, tipo, justificacion, origen, fecha)
-                        VALUES (?, ?, ?, 'ia_gemini', date('now'))
+                        INSERT INTO decisiones (proyecto_id, tipo, justificacion, origen, accion_tomada, fecha)
+                        VALUES (?, ?, ?, 'ia_gemini', 'pospuesta', date('now'))
                     """, (
                         proyecto['id'],
-                        proyecto['decision'],
-                        proyecto['justificacion']
+                        decision_tipo,
+                        proyecto['justificacion'],
                     ))
                 except Exception as e:
                     logger.warning(f"Error guardando decisión para proyecto {proyecto['id']}: {e}")

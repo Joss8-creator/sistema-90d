@@ -303,7 +303,20 @@
         grid-template-columns: 1fr;
     }
 
-    .acciones-grid {
-        grid-template-columns: 1fr;
-    }
+}
+
+/* Estilos para botón de ideas */
+.accion-ideas {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.accion-ideas:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+}
+
+.accion-ideas .accion-icono {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }

@@ -33,6 +33,9 @@ def get_connection() -> sqlite3.Connection:
     
     return conn
 
+# Alias para compatibilidad con otros módulos
+get_db = get_connection
+
 @contextmanager
 def transaccion_segura():
     """Context manager para garantizar transacciones ACID y cierre de conexión."""
@@ -77,6 +80,8 @@ def init_database() -> None:
             estado TEXT NOT NULL CHECK(estado IN ('idea', 'mvp', 'active', 'paused', 'killed', 'winner')),
             ciclo_id INTEGER,
             version INTEGER DEFAULT 1, -- Optimistic Locking
+            razon_kill TEXT,
+            fecha_kill TEXT,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (ciclo_id) REFERENCES ciclos_90d(id)
         )
@@ -980,7 +985,7 @@ if __name__ == '__main__':
     """
     print("Inicializando base de datos...")
     init_database()
-    print(f"✓ Base de datos creada en: {DB_PATH}")
+    print(f"[OK] Base de datos creada en: {DB_PATH}")
     
     # Verificar si existe ciclo activo
     ciclo = obtener_ciclo_activo()
@@ -988,13 +993,13 @@ if __name__ == '__main__':
         print("\nNo hay ciclo activo. Creando ciclo 90D...")
         ciclo_id = crear_ciclo_90d()
         ciclo = obtener_ciclo_activo()
-        print(f"✓ Ciclo creado: {ciclo['fecha_inicio']} → {ciclo['fecha_fin']}")
+        print(f"[OK] Ciclo creado: {ciclo['fecha_inicio']} -> {ciclo['fecha_fin']}")
     else:
-        print(f"\n✓ Ciclo activo: {ciclo['fecha_inicio']} → {ciclo['fecha_fin']}")
+        print(f"\n[OK] Ciclo activo: {ciclo['fecha_inicio']} -> {ciclo['fecha_fin']}")
     
     # Mostrar fase actual
     fase = calcular_fase_actual(ciclo)
-    print(f"\n📅 Día {fase['dia']}/90 - Fase: {fase['nombre']}")
+    print(f"\n[FASE] Día {fase['dia']}/90 - Fase: {fase['nombre']}")
     print(f"   Días restantes: {fase['dias_restantes']}")
     
-    print("\n✓ Sistema listo para usar")
+    print("\n[OK] Sistema listo para usar")

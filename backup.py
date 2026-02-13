@@ -74,7 +74,7 @@ class SistemaBackup:
         # Calcular tamaño
         tamaño_mb = backup_path.stat().st_size / 1024 / 1024
         
-        print(f"✓ Backup creado: {backup_path.name} ({tamaño_mb:.2f} MB)")
+        print(f"[OK] Backup creado: {backup_path.name} ({tamaño_mb:.2f} MB)")
         
         return backup_path
     
@@ -97,7 +97,7 @@ class SistemaBackup:
                 backup.unlink()
                 print(f"  Eliminado backup antiguo: {backup.name}")
             
-            print(f"✓ Limpieza completada: {len(backups_a_eliminar)} backups eliminados")
+            print(f"[OK] Limpieza completada: {len(backups_a_eliminar)} backups eliminados")
     
     def backup_automatico_si_necesario(self, intervalo_horas: int = 24):
         """
@@ -152,7 +152,7 @@ class SistemaBackup:
         if self.db_path.exists():
             backup_seguridad = self.db_path.with_suffix('.db.before_restore')
             shutil.copy2(self.db_path, backup_seguridad)
-            print(f"✓ Backup de seguridad creado: {backup_seguridad.name}")
+            print(f"[OK] Backup de seguridad creado: {backup_seguridad.name}")
         
         # Restaurar
         if backup_path.suffix == '.gz':
@@ -164,7 +164,7 @@ class SistemaBackup:
             # Copiar directamente
             shutil.copy2(backup_path, self.db_path)
         
-        print(f"✓ Base de datos restaurada desde: {backup_path.name}")
+        print(f"[OK] Base de datos restaurada desde: {backup_path.name}")
         return True
     
     def listar_backups(self) -> list:
@@ -235,13 +235,13 @@ if __name__ == '__main__':
         
         if comando == 'crear':
             backup_sistema.crear_backup()
-            print("\n✓ Backup creado exitosamente")
+            print("\n[OK] Backup creado exitosamente")
         
         elif comando == 'listar':
             backups = backup_sistema.listar_backups()
-            print(f"\n📦 Backups disponibles ({len(backups)}):\n")
+            print(f"\n[LISTA] Backups disponibles ({len(backups)}):\n")
             for i, b in enumerate(backups, 1):
-                comp = "📦" if b['comprimido'] else "📄"
+                comp = "[GZ]" if b['comprimido'] else "[DB]"
                 print(f"{i}. {comp} {b['nombre']}")
                 print(f"   Tamaño: {b['tamaño_mb']:.2f} MB")
                 print(f"   Fecha: {b['fecha'].strftime('%Y-%m-%d %H:%M:%S')}")
@@ -249,7 +249,7 @@ if __name__ == '__main__':
         
         elif comando == 'stats':
             stats = backup_sistema.obtener_estadisticas()
-            print("\n📊 Estadísticas de Backups:\n")
+            print("\n[STATS] Estadísticas de Backups:\n")
             print(f"Número de backups: {stats['num_backups']}")
             print(f"Espacio total: {stats['espacio_total_mb']:.2f} MB")
             if stats['ultimo_backup']:
@@ -275,5 +275,5 @@ if __name__ == '__main__':
         
         # Mostrar estadísticas
         stats = backup_sistema.obtener_estadisticas()
-        print(f"\n📊 Total de backups: {stats['num_backups']}")
+        print(f"\n[STATS] Total de backups: {stats['num_backups']}")
         print(f"   Espacio usado: {stats['espacio_total_mb']:.2f} MB")

@@ -1,56 +1,186 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Ideas - Sistema 90D</title>
     <link rel="stylesheet" href="/static/style.css">
-    <link rel="stylesheet" href="/static/ideas.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
+
 <body>
-    <div class="ideas-container">
-        
-        <header class="ideas-header">
+    <div class="container">
+
+        <header class="page-header">
             <h1>💡 Generador de Ideas de Proyectos</h1>
-            <a href="/" class="btn-volver">← Dashboard</a>
+            <a href="/" class="btn-secondary">← Volver al Dashboard</a>
         </header>
 
         <section class="generador-seccion">
             <div class="generador-card">
-                <h2>Generar Nuevas Ideas</h2>
-                <p>Usa IA para generar ideas de proyectos basadas en tu contexto actual.</p>
-                
-                <form hx-post="/ideas/generar" 
-                      hx-target="#ideas-resultado"
-                      hx-indicator="#loading">
-                    
-                    <label for="cantidad">¿Cuántas ideas generar?</label>
-                    <select name="cantidad" id="cantidad">
-                        <option value="3">3 ideas</option>
-                        <option value="5" selected>5 ideas</option>
-                        <option value="7">7 ideas</option>
-                        <option value="10">10 ideas</option>
-                    </select>
-                    
-                    <button type="submit" class="btn-primary btn-lg">
-                        🤖 Generar Ideas con IA
+                <h2>Generar Nuevas Ideas con IA</h2>
+                <p>Usa Gemini para generar ideas de proyectos basadas en tu contexto actual.</p>
+
+                <form hx-post="/ideas/generar" hx-target="#ideas-resultado" hx-indicator="#loading"
+                    style="max-width: 400px;">
+
+                    <div class="form-group">
+                        <label for="cantidad">¿Cuántas ideas generar?</label>
+                        <select name="cantidad" id="cantidad" class="form-control">
+                            <option value="3">3 ideas</option>
+                            <option value="5" selected>5 ideas (recomendado)</option>
+                            <option value="7">7 ideas</option>
+                            <option value="10">10 ideas</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-lg" style="width: 100%;">
+                        🤖 Generar Ideas con Gemini
                     </button>
-                    
-                    <div id="loading" class="htmx-indicator">
+
+                    <div id="loading" class="htmx-indicator" style="margin-top: 20px;">
                         <div class="spinner"></div>
-                        <p>Generando ideas con Gemini... (puede tomar 30-60s)</p>
+                        <p>Generando ideas con Gemini... (30-90 segundos)</p>
                     </div>
                 </form>
+
+                <div class="info-box" style="margin-top: 30px;">
+                    <h4>📖 Cómo funciona:</h4>
+                    <ol>
+                        <li>El sistema analiza tus proyectos actuales</li>
+                        <li>Genera prompt optimizado para Gemini</li>
+                        <li>Gemini genera ideas contextualizadas</li>
+                        <li>Las ideas incluyen hipótesis, mercado y viabilidad</li>
+                        <li>Puedes crear proyectos directamente desde ideas</li>
+                    </ol>
+                </div>
             </div>
         </section>
 
-        <section id="ideas-resultado" class="ideas-resultado">
-            <!-- Aquí se cargarán las ideas generadas -->
-            <div class="placeholder">
-                <p>👆 Genera ideas para ver resultados aquí</p>
+        <section id="ideas-resultado" class="ideas-resultado" style="margin-top: 40px;">
+            <div class="placeholder" style="text-align: center; padding: 60px 20px; color: #999;">
+                <p style="font-size: 18px;">👆 Genera ideas para ver resultados aquí</p>
             </div>
         </section>
 
     </div>
+
+    <style>
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #333;
+        }
+
+        .generador-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .generador-card h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .generador-card>p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #2196F3;
+        }
+
+        .info-box ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .htmx-indicator {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #f0f8ff;
+            border-radius: 8px;
+        }
+
+        .htmx-indicator.htmx-request {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </body>
+
 </html>

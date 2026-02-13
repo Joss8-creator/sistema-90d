@@ -1,6 +1,6 @@
 <div class="ideas-generadas">
     <div class="ideas-header">
-        <h2>💡 Ideas Generadas</h2>
+        <h2>[IDEA] Ideas Generadas</h2>
         <span class="ideas-badge">
             {{ cantidad_ideas }} ideas {{ contexto_texto }}
         </span>
@@ -20,33 +20,35 @@
 
             <div class="idea-detalles">
                 <div class="detalle-item">
-                    <strong>💰 Hipótesis:</strong>
+                    <strong>$ Hipótesis:</strong>
                     <p>{{ idea.hipotesis }}</p>
                 </div>
 
                 <div class="detalle-item">
-                    <strong>🎯 Mercado:</strong>
+                    <strong>[M] Mercado:</strong>
                     <p>{{ idea.mercado_objetivo }}</p>
                 </div>
 
                 <div class="detalle-item">
-                    <strong>⏱️ Tiempo estimado MVP:</strong>
+                    <strong>[T] Tiempo estimado MVP:</strong>
                     <p>{{ idea.tiempo_estimado_mvp }}</p>
                 </div>
 
                 <div class="detalle-item">
-                    <strong>✨ Por qué esta idea:</strong>
+                    <strong>[!] Por qué esta idea:</strong>
                     <p>{{ idea.razon_sugerencia }}</p>
                 </div>
             </div>
 
             <div class="idea-acciones">
-                <button hx-post="/proyectos/crear-desde-idea"
-                    hx-vals='{"nombre": "{{ idea.nombre }}", "hipotesis": "{{ idea.hipotesis }}"}' class="btn-primary">
-                    ➕ Crear Proyecto
+                <button hx-post="/proyectos/crear-desde-idea" 
+                        hx-target="#modal-crear-proyecto" 
+                        hx-vals='js:{"nombre": `{{ idea.nombre }}`, "descripcion": `{{ idea.descripcion }}`, "hipotesis": `{{ idea.hipotesis }}`, "mercado_objetivo": `{{ idea.mercado_objetivo }}`, "tiempo_mvp": `{{ idea.tiempo_estimado_mvp }}`}' 
+                        class="btn-primary">
+                    (+) Crear Proyecto
                 </button>
                 <button class="btn-secondary" onclick="copiarIdea(this)">
-                    📋 Copiar
+                    [CP] Copiar
                 </button>
             </div>
         </div>
@@ -64,8 +66,8 @@
         const texto = `${nombre}\n\n${descripcion}\n\nHipótesis: ${hipotesis}`;
 
         navigator.clipboard.writeText(texto).then(() => {
-            button.textContent = '✓ Copiado';
-            setTimeout(() => button.textContent = '📋 Copiar', 2000);
+            button.textContent = '[OK] Copiado';
+            setTimeout(() => button.textContent = '[CP] Copiar', 2000);
         });
     }
 </script>

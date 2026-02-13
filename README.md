@@ -419,7 +419,6 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](L
 ## 📞 Soporte
 
 - **Issues**: [GitHub Issues](https://github.com/tu-usuario/sistema-90d/issues)
-- **Documentación**: Lee el `Documento_Base.md` para entender la metodología completa
 - **Ayuda**: Endpoint `/ayuda` en la interfaz web
 
 ---

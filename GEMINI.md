@@ -1,67 +1,52 @@
-# 🚀 GEMINI.md - Sistema 90D
+# 🚀 Sistema 90D - Contexto del Proyecto
 
-Este archivo proporciona contexto estratégico e instrucciones técnicas para trabajar en el proyecto **Sistema 90D**, un centro de comando para solopreneurs basado en la metodología de ciclos de 90 días.
+Este proyecto es un "Centro de Comando para Solopreneurs" diseñado para validar ideas y construir proyectos rentables siguiendo la metodología de ciclos de 90 días.
 
-## 📌 Visión General del Proyecto
-- **Propósito**: Validar ideas de negocio, registrar métricas y tomar decisiones estratégicas (Kill, Iterate, Winner) basadas en datos y análisis de IA.
-- **Filosofía**: **Zero Dependencies**. El proyecto utiliza exclusivamente la librería estándar de Python 3.11+ para garantizar máxima portabilidad, velocidad y facilidad de mantenimiento.
-- **Arquitectura**:
-  - **Backend**: Servidor HTTP minimalista basado en `http.server`.
-  - **Base de Datos**: SQLite con transacciones ACID, modo WAL y claves foráneas habilitadas.
-  - **Frontend**: HTML vanilla con **HTMX** para interactividad y un motor de plantillas personalizado definido en `app.py`.
-  - **IA**: Generador de prompts estructurados para análisis externo (ChatGPT/Claude) e integración opcional vía API.
+## 🛠️ Tecnologías Principales
 
-## 🛠️ Comandos Clave
+- **Lenguaje:** Python 3.11+ (Cero dependencias externas para el núcleo).
+- **Servidor Web:** `http.server` (Python stdlib).
+- **Base de Datos:** SQLite con modo WAL y claves foráneas habilitadas.
+- **Frontend:** HTML5, CSS3 (Vanilla), y HTMX (para interactividad ligera).
+- **IA:** Integración opcional con **Gemini CLI** para análisis y generación de ideas.
 
-### Ejecución y Desarrollo
-- **Iniciar Servidor**: `python app.py` (Disponible en `http://localhost:8080`)
-- **Inicializar BD**: Se realiza automáticamente al arrancar `app.py`, pero puede forzarse con `python database.py`.
-- **Exportar Datos**: 
-  - CSV: `curl http://localhost:8080/exportar-csv > datos.csv`
-  - Prompt IA: `curl http://localhost:8080/exportar-prompt > prompt.md`
+## 🏗️ Arquitectura y Estructura
+
+El proyecto sigue una arquitectura monolítica minimalista centrada en la eficiencia:
+
+- `app.py`: Punto de entrada principal y lógica del servidor HTTP.
+- `database.py`: Gestión de la persistencia con SQLite sin ORM.
+- `dashboard_data.py`: Procesamiento de métricas para la visualización del dashboard.
+- `gemini_integration.py`: Wrapper robusto para interactuar con Gemini CLI.
+- `templates/`: Sistema de plantillas personalizado que soporta variables, bucles, condicionales e inclusiones.
+- `static/`: Archivos CSS estáticos.
+- `data/`: Directorio que contiene la base de datos `sistema.db` y backups.
+
+## 🚀 Comandos Clave
+
+### Ejecución
+- **Iniciar servidor:** `python app.py` (Disponible en `http://localhost:8080`)
+- **Configurar IA (Opcional):** `pip install gemini-cli` y luego `gemini setup`.
 
 ### Testing
-El proyecto cuenta con múltiples suites de test para validar la robustez:
-- `python test_sistema.py` (Test general y generador de datos de prueba)
-- `python test_dashboard.py` (Validación de lógica de negocio del dashboard)
-- `python test_decisiones.py` (Lógica de clasificación de proyectos)
-- `python test_robustez.py` (Pruebas de carga y manejo de errores)
+Existen varios scripts de prueba para verificar la robustez del sistema:
+- `python test_sistema.py` (Test general)
+- `python test_dashboard.py`
+- `python test_decisiones.py`
+- `python test_robustez.py`
 
-## 📐 Convenciones de Desarrollo
+## 📏 Convenciones de Desarrollo
 
-### 1. Cero Dependencias Externas
-- **REGLA DE ORO**: No añadir librerías al `requirements.txt`. Cualquier funcionalidad debe implementarse usando `stdlib` de Python.
-- Las dependencias opcionales (ej. para APIs de IA externas) van en `requirements-optional.txt`.
+1. **Zero Dependencies:** No añadir librerías externas a menos que sea estrictamente necesario para funciones opcionales. Todo el núcleo debe funcionar con la librería estándar de Python.
+2. **Eficiencia:** El código debe ser ligero. Las consultas SQL son directas para evitar el overhead de un ORM.
+3. **Validación:** Usar `validadores.py` para asegurar la integridad de los datos antes de insertarlos en la BD.
+4. **Logging:** Utilizar el logger configurado en `logger_config.py` en lugar de `print` para trazabilidad.
+5. **Templates:** El motor de plantillas en `app.py` procesa etiquetas como `{{ var }}`, `{% for ... %}`, `{% if ... %}` y `{% include '...' %}`.
 
-### 2. Motor de Plantillas Personalizado
-Ubicado en `app.py`, soporta la siguiente sintaxis:
-- **Variables**: `{{ variable.atributo }}`
-- **Condicionales**: `{% if condicion %} ... {% endif %}`
-- **Bucles**: `{% for item in lista %} ... {% endfor %}`
-- **Includes**: `{% include 'componente.html' %}`
+## 🤖 Integración con Gemini
 
-### 3. Gestión de Base de Datos
-- Usar siempre el context manager `transaccion_segura()` de `database.py` para operaciones de escritura.
-- Las consultas complejas deben preferirse en vistas (ej. `v_resumen_proyectos`).
-- Seguir el patrón de **Optimistic Locking** usando la columna `version` en la tabla `proyectos`.
+El sistema utiliza Gemini CLI para:
+- **Análisis Semanal:** Evalúa métricas y sugiere decisiones (Kill/Iterate/Winner).
+- **Generador de Ideas:** Sugiere nuevos proyectos basados en el contexto actual del usuario.
 
-### 4. Estilo de Código
-- Documentar funciones críticas (docstrings).
-- Usar `logger_app` y `logger_db` para el registro de eventos y errores.
-- Las validaciones de entrada deben residir en `validadores.py`.
-
-## 📂 Estructura Crítica
-- `app.py`: Punto de entrada, routing y motor de renderizado.
-- `database.py`: Esquema y operaciones CRUD core.
-- `dashboard_data.py`: Lógica de agregación para la interfaz de usuario.
-- `prompt_generator.py`: Ingeniería de prompts para el análisis estratégico.
-- `guia.py`: Lógica de fases del ciclo (Exploración, Experimentación, Decisión, Consolidación).
-- `templates/`: Plantillas HTML y componentes reutilizables.
-- `data/`: Contiene `sistema.db` y backups automáticos.
-
-## 🎯 Metodología de Ciclos 90D
-El sistema opera bajo 4 fases automáticas basadas en el día del ciclo:
-1. **Exploración (Días 1-14)**: Foco en hipótesis y diseño de experimentos.
-2. **Experimentación (Días 15-45)**: Lanzamiento de MVPs y captura de tracción.
-3. **Decisión (Días 46-75)**: Clasificación crítica de proyectos.
-4. **Consolidación (Días 76-90)**: Escalamiento de "Winners" y cierre de ciclo.
+Los prompts se gestionan a través de `prompt_generator.py` y se ejecutan mediante `gemini_integration.py`.

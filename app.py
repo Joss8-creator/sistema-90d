@@ -678,6 +678,13 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
                     'contexto_texto': contexto_texto,
                     'contexto': resultado['contexto']
                 })
+                
+                if not html or html.strip() == "":
+                    logger_app.error("HTML generado para ideas está vacío")
+                    self.send_error(500, "Error al generar el componente de ideas")
+                    return
+
+                logger_app.info(f"Enviando {len(html)} bytes de HTML de ideas")
                 self.send_response(200)
                 self.send_header('Content-Type', 'text/html; charset=utf-8')
                 self.end_headers()
@@ -694,37 +701,38 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
             self.send_error(500, 'Error interno del servidor')
 
     def handle_crear_proyecto_desde_idea(self, data: dict):
-        """Crear proyecto desde idea generada."""
-        try:
-            if not limiter.permitir('crear_proyecto', limite=3, ventana=60):
-                self.send_error(429, "Demasiados proyectos creados. Espera un minuto.")
-                return
+        """
+        Crea un proyecto pre-rellenado desde una idea generada por IA.
+        """
+        nombre = data.get('nombre', '')
+        descripcion = data.get('descripcion', '')
+        hipotesis = data.get('hipotesis', '')
+        mercado_objetivo = data.get('mercado_objetivo', '')
+        tiempo_mvp = data.get('tiempo_mvp', '')
+        
+        # Combinar toda la info en el campo hipótesis
+        hipotesis_completa = f"""{descripcion}
 
-            nombre = data.get('nombre', '')
-            hipotesis = data.get('hipotesis', '')
-            # Limpiar posible markdown en nombre/hipotesis
-            nombre = nombre.strip().replace('*', '')
-            hipotesis = hipotesis.strip()
-            
-            fecha_inicio = date.today().isoformat()
-            
-            # Crear como idea
-            proyecto_id = db.crear_proyecto(nombre, hipotesis, fecha_inicio, 'idea')
-            logger_app.info(f"Nuevo proyecto desde idea: {nombre} (ID: {proyecto_id})")
-            
-            # Retornar mensaje de éxito o redirect
-            # HTMX espera HTML o redirect.
-            # Vamos a redirigir al proyecto creado para que el usuario empiece a trabajar
-            self.send_response(200)
-            self.send_header('Content-Type', 'text/html; charset=utf-8')
-            # HTMX Header para redirect lado cliente
-            self.send_header('HX-Redirect', f'/proyecto/{proyecto_id}')
-            self.end_headers()
-            self.wfile.write(b'Proyecto creado')
-            
-        except Exception as e:
-            logger_app.error(f"Error al crear proyecto desde idea: {e}", exc_info=True)
-            self.send_error(500, f"Error interno: {str(e)}")
+🎯 Mercado Objetivo: {mercado_objetivo}
+
+⏱️ Tiempo Estimado MVP: {tiempo_mvp}
+
+💰 Hipótesis de Monetización:
+{hipotesis}
+"""
+        
+        context = {
+            'nombre': nombre,
+            'hipotesis': hipotesis_completa,
+            'origen': 'idea_ia'
+        }
+        
+        html = render_template('components/formulario_proyecto_idea.html', context)
+        
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        self.wfile.write(html.encode('utf-8'))
     
     def log_message(self, format, *args):
         """Override para logging más limpio"""
@@ -733,6 +741,7 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
 
 def run_server():
     """Iniciar servidor HTTP"""
+    configurar_logging()
     # Inicializar base de datos si no existe
     db.init_database()
     
@@ -741,12 +750,12 @@ def run_server():
     ciclo = db.obtener_ciclo_activo()
     if ciclo:
         fase = db.calcular_fase_actual(ciclo)
-        print(f"✓ Ciclo activo: Día {fase['dia']}/90 - Fase: {fase['nombre']}")
+        print(f"[OK] Ciclo activo: Día {fase['dia']}/90 - Fase: {fase['nombre']}")
     else:
-        print("⏸️  No hay ciclo activo. Inicia tu ciclo desde la interfaz web.")
+        print("[PAUSE] No hay ciclo activo. Inicia tu ciclo desde la interfaz web.")
     
     # Sistema de backup automático
-    print("\n🔒 Verificando backups...")
+    print("\n[BACKUP] Verificando backups...")
     backup_sistema = bk.SistemaBackup(db.DB_PATH)
     # Iniciar backup automático en hilo separado
     import threading

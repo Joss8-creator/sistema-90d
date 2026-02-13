@@ -12,13 +12,17 @@ from typing import Dict, List
 import database as db
 
 
-def generar_prompt_analisis() -> str:
+def generar_prompt_analisis(formato_json: bool = False) -> str:
     """
     Generar prompt completo de análisis semanal del Sistema 90D.
     
+    Args:
+        formato_json: Si es True, solicita la respuesta estrictamente en JSON.
+    
     Returns:
-        str: Contenido markdown listo para copiar/pegar en IA
+        str: Contenido markdown o estructurado para IA
     """
+    # ... (código existente hasta la construcción del prompt) ...
     # Obtener datos del sistema
     ciclo = db.obtener_ciclo_activo()
     if not ciclo:
@@ -76,7 +80,35 @@ def generar_prompt_analisis() -> str:
             
             prompt += "\n"
     
-    prompt += """---
+    # ... (código previo)
+    
+    if formato_json:
+        prompt += """---
+
+## PROMPT PARA IA (FORMATO AUTOMÁTICO)
+
+Actúa como analista estratégico del Sistema 90D. Analiza los datos proporcionados y genera una respuesta ESTRICTAMENTE en formato JSON.
+
+FORMATO JSON ESPERADO:
+{
+  "resumen_ejecutivo": "Resumen breve de la situación actual",
+  "proyectos": [
+    {
+      "id": [ID numérico],
+      "nombre": "[Nombre]",
+      "decision": "kill|iterate|winner",
+      "justificacion": "Basada en métricas",
+      "acciones": ["acción 1", "acción 2"],
+      "riesgos": ["riesgo 1"]
+    }
+  ],
+  "riesgos_detectados": ["riesgo global 1"]
+}
+
+IMPORTANTE: Responde ÚNICAMENTE con el objeto JSON. Sin texto antes ni después.
+"""
+    else:
+        prompt += """---
 
 ## PROMPT PARA IA
 
@@ -252,5 +284,5 @@ if __name__ == '__main__':
     print("GUARDANDO ARCHIVO...")
     
     ruta = guardar_prompt_archivo(prompt)
-    print(f"\n✓ Prompt guardado en: {ruta}")
+    print(f"\n[OK] Prompt guardado en: {ruta}")
     print("\nPuedes copiar el contenido y pegarlo en tu IA preferida.")

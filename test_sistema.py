@@ -29,7 +29,7 @@ def crear_datos_prueba():
     db.crear_metrica(p1, date.today().isoformat(), 500, 3, 20, "20 clientes, MRR $500")
     
     dashboard1 = db.calcular_dashboard_proyecto(p1)
-    print(f"   ✓ Ingresos: ${dashboard1['total_ingresos']:.2f}, ROI: ${dashboard1['roi']:.2f}/h")
+    print(f"   [OK] Ingresos: ${dashboard1['total_ingresos']:.2f}, ROI: ${dashboard1['roi']:.2f}/h")
     
     # Proyecto 2: Iterate (estancado)
     print("\n2. Creando proyecto 'App Productividad'...")
@@ -46,7 +46,7 @@ def crear_datos_prueba():
     db.crear_metrica(p2, (date.today() - timedelta(days=10)).isoformat(), 0, 5, 5, "Solo 5 usuarios activos")
     
     dashboard2 = db.calcular_dashboard_proyecto(p2)
-    print(f"   ⚠️ Ingresos: ${dashboard2['total_ingresos']:.2f}, ROI: ${dashboard2['roi']:.2f}/h")
+    print(f"   [WARN] Ingresos: ${dashboard2['total_ingresos']:.2f}, ROI: ${dashboard2['roi']:.2f}/h")
     
     # Proyecto 3: Kill (sin tracción)
     print("\n3. Creando proyecto 'Marketplace NFT'...")
@@ -63,7 +63,7 @@ def crear_datos_prueba():
     db.crear_metrica(p3, (date.today() - timedelta(days=15)).isoformat(), 0, 10, 2, "Lanzamiento, 2 usuarios")
     
     dashboard3 = db.calcular_dashboard_proyecto(p3)
-    print(f"   ❌ Ingresos: ${dashboard3['total_ingresos']:.2f}, ROI: ${dashboard3['roi']:.2f}/h")
+    print(f"   [ERROR] Ingresos: ${dashboard3['total_ingresos']:.2f}, ROI: ${dashboard3['roi']:.2f}/h")
     
     # Proyecto 4: Idea nueva
     print("\n4. Creando proyecto 'API Scraping'...")
@@ -73,10 +73,10 @@ def crear_datos_prueba():
         fecha_inicio=date.today().isoformat(),
         estado="idea"
     )
-    print(f"   💡 Sin métricas aún (recién creado)")
+    print(f"   [IDEA] Sin métricas aún (recién creado)")
     
     print("\n" + "="*80)
-    print("✓ Datos de prueba creados exitosamente")
+    print("[OK] Datos de prueba creados exitosamente")
     print("="*80)
     
     # Mostrar resumen
@@ -94,7 +94,7 @@ def verificar_criterios_aceptacion():
     print("="*80)
     
     # Criterio 1: Proyecto registrado en <2 minutos
-    print("\n✓ Criterio 1: Registro de proyecto")
+    print("\n[OK] Criterio 1: Registro de proyecto")
     print("  - Formulario con 4 campos: nombre, hipótesis, fecha, estado")
     print("  - Tiempo estimado: <1 minuto (formulario simple)")
     
