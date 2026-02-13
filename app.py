@@ -22,6 +22,8 @@ import backup as bk  # Sistema de backup automático
 from integracion_ia import IntegradorIA  # Integración opcional con APIs
 import guia  # Guía contextual (NUEVO Fase 3)
 import dashboard_data  # Datos para el dashboard unificado
+from analisis_ia_gemini import AnalizadorGemini
+from generador_ideas import GeneradorIdeas
 from validadores import ValidadorMetricas, ValidadorProyectos, ErrorValidacion
 from logger_config import configurar_logging, logger_app
 from rate_limiter import limiter
@@ -164,6 +166,8 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
             self.handle_exportar_csv()
         elif path == '/analizar-ia':
             self.handle_analizar_ia()
+        elif path == '/ideas':
+            self.handle_pagina_ideas()
         elif path == '/health':
             self.handle_health()
         elif path.startswith('/static/'):
@@ -190,6 +194,12 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
             self.handle_responder_decision(data)
         elif path == '/ciclo/iniciar':
             self.handle_iniciar_ciclo()
+        elif path == '/ia/analisis-automatico':
+            self.handle_analisis_automatico()
+        elif path == '/ideas/generar':
+            self.handle_generar_ideas(data)
+        elif path == '/proyectos/crear-desde-idea':
+            self.handle_crear_proyecto_desde_idea(data)
         elif path.startswith('/proyecto/') and path.endswith('/actualizar'):
             proyecto_id = path.split('/')[-2]
             if proyecto_id.isdigit():
@@ -402,6 +412,18 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(json.dumps(resultado).encode('utf-8'))
 
+    def handle_pagina_ideas(self):
+        """Página dedicada a generación de ideas."""
+        try:
+            html = render_template('ideas.html', {})
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            self.end_headers()
+            self.wfile.write(html.encode('utf-8'))
+        except Exception as e:
+            logger_app.error(f"Error en página de ideas: {e}", exc_info=True)
+            self.send_error(500, "Error interno al cargar ideas")
+
     def handle_exportar_csv(self):
         """Generar y descargar CSV consolidado de métricas"""
         proyectos = db.obtener_todos_proyectos_con_metricas()
@@ -604,6 +626,98 @@ class Sistema90DHandler(BaseHTTPRequestHandler):
         except Exception as e:
             logger_app.error(f"Error al iniciar ciclo: {e}", exc_info=True)
             self.send_error(500, f"Error al iniciar ciclo: {str(e)}")
+
+    def handle_analisis_automatico(self):
+        """
+        Ejecuta análisis semanal automáticamente con Gemini CLI.
+        NO requiere copy/paste manual.
+        """
+        try:
+            analizador = AnalizadorGemini('data/sistema.db')
+            resultado = analizador.analisis_semanal_automatico()
+            
+            if resultado['success']:
+                html = render_template('components/analisis_resultado.html', {
+                    'analisis': resultado['analisis'],
+                    'tiempo': resultado['tiempo_ejecucion']
+                })
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.end_headers()
+                self.wfile.write(html.encode('utf-8'))
+            else:
+                self.send_error(500, resultado['error'])
+        
+        except RuntimeError as e:
+            # Gemini CLI no instalado
+            self.send_error(500, f"Error de configuración: {str(e)}")
+        
+        except Exception as e:
+            logger_app.error(f"Error en análisis automático: {e}", exc_info=True)
+            self.send_error(500, "Error interno del servidor")
+
+    def handle_generar_ideas(self, data: dict):
+        """
+        Genera ideas de proyectos con Gemini.
+        """
+        cantidad = int(data.get('cantidad', 5))
+        
+        try:
+            generador = GeneradorIdeas('data/sistema.db')
+            resultado = generador.generar_ideas(cantidad)
+            
+            if resultado['success']:
+                html = render_template('components/ideas_generadas.html', {
+                    'ideas': resultado['ideas'],
+                    'contexto': resultado['contexto']
+                })
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.end_headers()
+                self.wfile.write(html.encode('utf-8'))
+            else:
+                self.send_error(500, resultado['error'])
+        
+        except RuntimeError as e:
+            # Gemini CLI sin configurar
+             self.send_error(500, f"Error de configuración: {str(e)}")
+
+        except Exception as e:
+            logger_app.error(f"Error generando ideas: {e}", exc_info=True)
+            self.send_error(500, 'Error interno del servidor')
+
+    def handle_crear_proyecto_desde_idea(self, data: dict):
+        """Crear proyecto desde idea generada."""
+        try:
+            if not limiter.permitir('crear_proyecto', limite=3, ventana=60):
+                self.send_error(429, "Demasiados proyectos creados. Espera un minuto.")
+                return
+
+            nombre = data.get('nombre', '')
+            hipotesis = data.get('hipotesis', '')
+            # Limpiar posible markdown en nombre/hipotesis
+            nombre = nombre.strip().replace('*', '')
+            hipotesis = hipotesis.strip()
+            
+            fecha_inicio = date.today().isoformat()
+            
+            # Crear como idea
+            proyecto_id = db.crear_proyecto(nombre, hipotesis, fecha_inicio, 'idea')
+            logger_app.info(f"Nuevo proyecto desde idea: {nombre} (ID: {proyecto_id})")
+            
+            # Retornar mensaje de éxito o redirect
+            # HTMX espera HTML o redirect.
+            # Vamos a redirigir al proyecto creado para que el usuario empiece a trabajar
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            # HTMX Header para redirect lado cliente
+            self.send_header('HX-Redirect', f'/proyecto/{proyecto_id}')
+            self.end_headers()
+            self.wfile.write(b'Proyecto creado')
+            
+        except Exception as e:
+            logger_app.error(f"Error al crear proyecto desde idea: {e}", exc_info=True)
+            self.send_error(500, f"Error interno: {str(e)}")
     
     def log_message(self, format, *args):
         """Override para logging más limpio"""

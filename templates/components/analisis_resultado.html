@@ -1,0 +1,62 @@
+<div class="modal-content" style="max-width: 800px; width: 95%;">
+    <div class="modal-header">
+        <h2>🤖 Análisis Automático con Gemini</h2>
+        <button onclick="cerrarModal('modal')" class="btn-close">&times;</button>
+    </div>
+
+    <div class="modal-body">
+        <div class="analisis-meta" style="margin-bottom: 20px; color: #718096; font-size: 0.9em;">
+            <span>⏱️ Generado en {{ "%.2f"|format(tiempo) }}s</span>
+            <span>📅 {{ analisis.fecha }}</span>
+        </div>
+
+        <section class="analisis-resumen" style="margin-bottom: 25px;">
+            <h3 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">📊 Resumen Ejecutivo</h3>
+            <p>{{ analisis.resumen_ejecutivo }}</p>
+        </section>
+
+        <section class="analisis-proyectos" style="margin-bottom: 25px;">
+            <h3 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">🎯 Decisiones por
+                Proyecto</h3>
+
+            {% for proyecto in analisis.proyectos %}
+            <div class="analisis-proyecto-card"
+                style="background: #f7fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #4299e1;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="margin: 0; color: #2b6cb0;">Proyecto #{{ proyecto.id }}</h4>
+                    <span class="badge badge-{{ proyecto.decision }}"
+                        style="padding: 4px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.8em; background: #ebf8ff; color: #2b6cb0;">
+                        {{ proyecto.decision }}
+                    </span>
+                </div>
+                <p><strong>Justificación:</strong> {{ proyecto.justificacion }}</p>
+
+                <form action="/decisiones/responder" method="POST" style="margin-top: 10px;">
+                    <input type="hidden" name="proyecto_id" value="{{ proyecto.id }}">
+                    <input type="hidden" name="tipo" value="{{ proyecto.decision }}">
+                    <input type="hidden" name="justificacion" value="{{ proyecto.justificacion }}">
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" name="accion" value="aceptada" class="btn btn-sm btn-success"
+                            style="background: #48bb78; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">✅
+                            Aceptar</button>
+                        <button type="submit" name="accion" value="rechazada" class="btn btn-sm btn-danger"
+                            style="background: #f56565; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">❌
+                            Rechazar</button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section class="analisis-riesgos">
+            <h3 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">⚠️ Riesgos Detectados
+            </h3>
+            <ul style="padding-left: 20px; color: #c53030;">
+                {% for riesgo in analisis.riesgos_detectados %}
+                <li>{{ riesgo }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+</div>

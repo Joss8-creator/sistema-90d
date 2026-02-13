@@ -38,6 +38,19 @@
             <span class="accion-texto">Prompt de Análisis</span>
         </button>
 
+        <!-- Nuevas Acciones con IA -->
+        <a href="/ideas" class="accion-btn accion-ideas" style="background: #ebf8ff; border-color: #bee3f8;">
+            <span class="accion-icono">💡</span>
+            <span class="accion-texto">Generar Ideas</span>
+        </a>
+
+        <button hx-post="/ia/analisis-automatico" hx-target="#modal-container" hx-indicator="#loading-analisis"
+            class="accion-btn accion-ia" style="background: #e6fffa; border-color: #b2f5ea;"
+            onclick="mostrarModalContainer()">
+            <span class="accion-icono">🤖</span>
+            <span class="accion-texto">Analizar (Gemini)</span>
+        </button>
+
         <a href="/exportar-csv" class="accion-btn">
             <span class="accion-icono">📊</span>
             <span class="accion-texto">Exportar CSV</span>
@@ -84,6 +97,14 @@
         // Aquí se podría hacer un fetch a una ruta de backup
     }
 
+    function mostrarModalContainer() {
+        const container = document.getElementById('modal-container');
+        if (container) {
+            container.style.display = 'flex';
+            container.innerHTML = '<div class="spinner"></div><p style="color:white;text-align:center;width:100%;">Analizando con Gemini...</p>';
+        }
+    }
+
     // Cerrar modal con tecla ESC
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
@@ -93,6 +114,10 @@
                     cerrarModal(modal.id);
                 }
             });
+            const container = document.getElementById('modal-container');
+            if (container && container.style.display === 'flex') {
+                container.style.display = 'none';
+            }
         }
     });
 </script>

@@ -1,0 +1,76 @@
+<div class="ideas-generadas">
+    <div class="ideas-header">
+        <h2>💡 Ideas Generadas</h2>
+        <span class="ideas-badge">
+            {{ ideas|length }} ideas
+            {% if contexto == 'con_proyectos' %}
+            (relacionadas a tus proyectos)
+            {% else %}
+            (ideas nuevas)
+            {% endif %}
+        </span>
+    </div>
+
+    <div class="ideas-grid">
+        {% for idea in ideas %}
+        <div class="idea-card idea-dificultad-{{ idea.dificultad }}">
+            <div class="idea-header">
+                <h3>{{ idea.nombre }}</h3>
+                <span class="dificultad-badge badge-{{ idea.dificultad }}">
+                    {{ idea.dificultad }}
+                </span>
+            </div>
+
+            <p class="idea-descripcion">{{ idea.descripcion }}</p>
+
+            <div class="idea-detalles">
+                <div class="detalle-item">
+                    <strong>💰 Hipótesis:</strong>
+                    <p>{{ idea.hipotesis }}</p>
+                </div>
+
+                <div class="detalle-item">
+                    <strong>🎯 Mercado:</strong>
+                    <p>{{ idea.mercado_objetivo }}</p>
+                </div>
+
+                <div class="detalle-item">
+                    <strong>⏱️ Tiempo estimado MVP:</strong>
+                    <p>{{ idea.tiempo_estimado_mvp }}</p>
+                </div>
+
+                <div class="detalle-item">
+                    <strong>✨ Por qué esta idea:</strong>
+                    <p>{{ idea.razon_sugerencia }}</p>
+                </div>
+            </div>
+
+            <div class="idea-acciones">
+                <button hx-post="/proyectos/crear-desde-idea"
+                    hx-vals='{"nombre": "{{ idea.nombre }}", "hipotesis": "{{ idea.hipotesis }}"}' class="btn-primary">
+                    ➕ Crear Proyecto
+                </button>
+                <button class="btn-secondary" onclick="copiarIdea(this)">
+                    📋 Copiar
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function copiarIdea(button) {
+        const card = button.closest('.idea-card');
+        const nombre = card.querySelector('h3').textContent;
+        const descripcion = card.querySelector('.idea-descripcion').textContent;
+        const hipotesis = card.querySelectorAll('.detalle-item p')[0].textContent;
+
+        const texto = `${nombre}\n\n${descripcion}\n\nHipótesis: ${hipotesis}`;
+
+        navigator.clipboard.writeText(texto).then(() => {
+            button.textContent = '✓ Copiado';
+            setTimeout(() => button.textContent = '📋 Copiar', 2000);
+        });
+    }
+</script>

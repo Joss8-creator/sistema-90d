@@ -1,0 +1,219 @@
+/* Ideas Page Styles */
+
+.ideas-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.ideas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.ideas-header h1 {
+    font-size: 2rem;
+    color: #2d3748;
+}
+
+.btn-volver {
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: #edf2f7;
+    transition: background 0.2s;
+}
+
+.btn-volver:hover {
+    background: #e2e8f0;
+}
+
+.generador-seccion {
+    margin-bottom: 40px;
+}
+
+.generador-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.generador-card h2 {
+    margin-top: 0;
+    color: #2d3748;
+}
+
+.generador-card form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e0;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+.btn-primary {
+    background: #4299e1;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #3182ce;
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0;
+}
+
+.htmx-indicator {
+    display: none;
+    margin-top: 20px;
+}
+
+.htmx-request .htmx-indicator {
+    display: block;
+}
+
+.htmx-request.htmx-indicator {
+    display: block;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ideas Grid */
+.ideas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.idea-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    border-top: 5px solid #cbd5e0;
+}
+
+.idea-dificultad-baja { border-color: #48bb78; }
+.idea-dificultad-media { border-color: #ecc94b; }
+.idea-dificultad-alta { border-color: #f56565; }
+
+.idea-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.idea-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #2d3748;
+}
+
+.dificultad-badge {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.badge-baja { background: #f0fff4; color: #276749; }
+.badge-media { background: #fffff0; color: #975a16; }
+.badge-alta { background: #fff5f5; color: #c53030; }
+
+.idea-descripcion {
+    color: #4a5568;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.idea-detalles {
+    display: grid;
+    gap: 12px;
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.detalle-item strong {
+    display: block;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.detalle-item p {
+    margin: 0;
+    color: #4a5568;
+}
+
+.idea-acciones {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.placeholder {
+    text-align: center;
+    color: #a0aec0;
+    padding: 40px;
+    border: 2px dashed #cbd5e0;
+    border-radius: 12px;
+}

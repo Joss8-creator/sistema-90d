@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Ideas - Sistema 90D</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/ideas.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+    <div class="ideas-container">
+        
+        <header class="ideas-header">
+            <h1>💡 Generador de Ideas de Proyectos</h1>
+            <a href="/" class="btn-volver">← Dashboard</a>
+        </header>
+
+        <section class="generador-seccion">
+            <div class="generador-card">
+                <h2>Generar Nuevas Ideas</h2>
+                <p>Usa IA para generar ideas de proyectos basadas en tu contexto actual.</p>
+                
+                <form hx-post="/ideas/generar" 
+                      hx-target="#ideas-resultado"
+                      hx-indicator="#loading">
+                    
+                    <label for="cantidad">¿Cuántas ideas generar?</label>
+                    <select name="cantidad" id="cantidad">
+                        <option value="3">3 ideas</option>
+                        <option value="5" selected>5 ideas</option>
+                        <option value="7">7 ideas</option>
+                        <option value="10">10 ideas</option>
+                    </select>
+                    
+                    <button type="submit" class="btn-primary btn-lg">
+                        🤖 Generar Ideas con IA
+                    </button>
+                    
+                    <div id="loading" class="htmx-indicator">
+                        <div class="spinner"></div>
+                        <p>Generando ideas con Gemini... (puede tomar 30-60s)</p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="ideas-resultado" class="ideas-resultado">
+            <!-- Aquí se cargarán las ideas generadas -->
+            <div class="placeholder">
+                <p>👆 Genera ideas para ver resultados aquí</p>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
